@@ -1,0 +1,13 @@
+{
+    "tasks": {
+        "server": "cd server && deno task server"
+    },
+    "workspace": [
+        "./server",
+        "./libs/build",
+        "./libs/shadcn",
+        "./libs/shadcn-pro",
+        "./plugins/admin"
+    ], 
+    "imports": {}
+}

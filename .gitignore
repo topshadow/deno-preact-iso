@@ -1,0 +1,6 @@
+# 忽略所有环境变量文件
+
+**/.env*
+# 但保留示例文件（.env.example 或 .env.sample）
+!.env.example
+**/*.db 
