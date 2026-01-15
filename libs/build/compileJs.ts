@@ -1,8 +1,13 @@
 import { resolve } from "@std/path";
-export async function Compile(
+ async function compile(
   input_path: string,
   config: any,
-  opt?: {output_path?:string,config_path?:string,sourcemap?:boolean},
+  opt?: {
+    output_path?: string;
+    config_path?: string;
+    cwd: string | URL;
+    sourcemap?: boolean;
+  },
 ): Promise<string | Deno.bundle.Message[]> {
   // console.log(config);
   if (!config.compilerOptions) {
@@ -15,19 +20,26 @@ export async function Compile(
   config.compilerOptions["jsxImportSource"] = "preact";
 
   const dir = await Deno.makeTempDir();
-  const config_file_path = opt&&opt.config_path?opt.config_path: resolve(dir, "deno.json");
-
+  const config_file_path = opt?.config_path ?? resolve(dir, "deno.json");
+  // console.log(config);
   Deno.writeTextFileSync(config_file_path, JSON.stringify(config));
-  console.log(config_file_path);
+  // console.log(config_file_path);
   // let external=[     "--packages",
   //     "external",
   //     "--external",
   //     "preact-iso",
   //     "--external",
   //     "preact",]
-  console.log(Deno.cwd())
+
+  const cwd = opt?.cwd || Deno.cwd();
+  // console.log(
+  //   "compile cwd:",
+  //   cwd,
+  //   "compile config_file_path:",
+  //   config_file_path,
+  // );
   const cmd = new Deno.Command("deno", {
-    cwd: Deno.cwd(),
+    cwd: cwd,
     args: [
       "bundle",
       "-c",
@@ -35,25 +47,41 @@ export async function Compile(
       input_path,
       "--platform",
       "browser",
-      '--minify',
-      ...(opt&&opt.sourcemap?['--sourcemap=inline']:[]),
+      "--minify",
+      ...(opt && opt.sourcemap ? ["--sourcemap=inline"] : []),
       "-q",
     ],
   });
   const { stderr, stdout } = await cmd.output();
   if (stderr.length > 0) {
-    const error = new TextDecoder().decode(stderr); 
+    const error = new TextDecoder().decode(stderr);
 
-    console.error(error);
+    console.error(" error cwd:", cwd, error);
     return error;
   } else {
     const data = new TextDecoder().decode(stdout);
     // console.log(data);
-    if (opt&& opt.output_path) {
+    if (opt && opt.output_path) {
       Deno.writeTextFile(opt.output_path, data);
     }
     return data;
   }
 
   //   return r.errors;
+}
+
+// import.meta.resolve()
+type ImportMeta = {
+  resolve: (specifier: string) => string;
+  url: string;
+};
+export async function compile_js(
+  { resolve, url }: ImportMeta,
+  config: any,
+) {
+  const endpoint = resolve("./app/client.tsx");
+  const cwd = new URL(".", url.replace("plugin.ts", ""));
+  const config_path = new URL("./client.tsx", url.replaceAll("plugin.ts", ""))
+    .href.replace("file:///", "");
+  return await compile(endpoint, config, { cwd, config_path });
 }

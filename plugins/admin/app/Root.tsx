@@ -69,7 +69,7 @@ const default_theme=`
   --sidebar-ring: oklch(0.556 0 0);
 }
 `
-export function Root() {
+export function Root({module_path}:{module_path:string}) {
   return (
     <html lang="en">
       <head>
@@ -80,7 +80,7 @@ export function Root() {
       </head>
       <body class="bg-background text-foreground">
         <div id="root"></div>
-        <script type="module" src="/client.js"></script>
+        <script type="module" src={module_path+"/client.js"}></script>
       </body>
     </html>
   );

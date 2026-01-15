@@ -13,13 +13,15 @@
     "@preact/signals": "npm:@preact/signals@^2.5.1",
     "preact": "npm:preact@^10.28.2",
     "preact-iso": "npm:preact-iso@^2.11.0",
-    
+    "@24wings/shadcn-pro": "../../libs/shadcn-pro/mod.tsx",
+    "@24wings/shadcn": "../../libs/shadcn/mod.tsx",
     "tailwind-merge": "npm:tailwind-merge@^3.4.0",
+    "clsx": "npm:clsx@^2.1.1",
     "@std/fs": "jsr:@std/fs@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.4",
     "class-variance-authority": "npm:class-variance-authority@^0.7.1"
   },
-  "compilerOptions": {
+  "compilerOptions": { 
     "jsx": "precompile",
     "jsxImportSource": "preact"
   }

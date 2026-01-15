@@ -8,6 +8,5 @@
         "./libs/shadcn",
         "./libs/shadcn-pro",
         "./plugins/admin"
-    ], 
-    "imports": {}
+    ]
 }

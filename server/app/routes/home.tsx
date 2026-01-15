@@ -34,9 +34,12 @@ export const Component = ({ count: initialCount }: LoaderData) => {
     data: [{ url: "@24wings/admin/plugin", name: "推荐管理后台" }],
     total: 2,
   });
+  const refresh_status = () =>
+    api.current_status().then((r) => is_success.value = r.ok);
+
   useEffect(() => {
     console.log("is server running");
-    api.current_status().then((r) => is_success.value = r.ok);
+    refresh_status();
   }, []);
 
   return (
@@ -52,6 +55,7 @@ export const Component = ({ count: initialCount }: LoaderData) => {
             </div>
             <div>
               <select
+              defaultValue={dialect.value}
                 value={dialect.value}
                 onChange={(e) => {
                   dialect.value = e.target.value;
@@ -113,7 +117,13 @@ export const Component = ({ count: initialCount }: LoaderData) => {
                   api.change_env({
                     DATABASE_URL: database_url.value,
                     DIALECT: dialect.value,
-                  }).then((r) => alert(r.ok))}
+                  }).then((r) => {
+                    if (r.ok) {
+                      refresh_status();
+                    } else {
+                      alert(r.msg);
+                    }
+                  })}
                 disabled={!valid.value}
                 size="sm"
               >

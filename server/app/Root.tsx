@@ -1,4 +1,4 @@
-const default_theme=`
+const default_theme = `
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
@@ -68,19 +68,18 @@ const default_theme=`
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-`
-export function Root() {
+`;
+export function Root({module_path}:{module_path:string}) {
   return (
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <script src="https://cdn.tailwindcss.com"></script>
-        <style  dangerouslySetInnerHTML={{__html:default_theme}} ></style>
-        
+        <style dangerouslySetInnerHTML={{ __html: default_theme }}></style>
       </head>
       <body class="bg-background text-foreground">
         <div id="root"></div>
-        <script type="module" src="/client.js"></script>
+        <script type="module" src={module_path+"/client.js"}></script>
       </body>
     </html>
   );

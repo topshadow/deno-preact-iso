@@ -5,6 +5,7 @@ import { routes } from "./routes.tsx";
 const getInitialData = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const w = window as any;
+
   if (typeof w !== "undefined" && w.__INITIAL_DATA__) {
     return w.__INITIAL_DATA__;
   }
@@ -13,6 +14,10 @@ const getInitialData = () => {
 
 const App = () => {
   const initialData = getInitialData();
+  let prefix='';
+  if(typeof window !='undefined'){
+    prefix=window.module_path||'';
+  }
 
   return (
     <LocationProvider>
@@ -20,8 +25,8 @@ const App = () => {
         <Router>
           {routes.map(({ path, Component }) => (
             <Route
-              key={path}
-              path={path}
+              key={prefix+path}
+              path={prefix+ path}
               component={() => <Component {...initialData} />}
             />
           ))}

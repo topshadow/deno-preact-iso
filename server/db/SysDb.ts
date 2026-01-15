@@ -4,15 +4,13 @@ export enum SysDbStatus {
   active = "active",
   disabled = "disabled",
 }
-export interface SysDbTable {
+export interface SysDataSourceTable {
   id: Generated<number>;
   dialect: Dialect;
-  create_at: string;
+  create_at: number;
   status: SysDbStatus;
   domain?: string;
   url: string;
 }
 
-export type SysDb = Selectable<SysDbTable>;
-
-
+export type SysDatasource = Selectable<SysDataSourceTable>;

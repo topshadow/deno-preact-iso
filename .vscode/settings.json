@@ -1,3 +1,5 @@
 {
-    "deno.enable": true
+    "deno.enable": true,
+    // settings.json example
+  "sqltools.useNodeRuntime": true
 }

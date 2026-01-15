@@ -17,12 +17,18 @@ export type LoaderData = Awaited<ReturnType<typeof loader>>;
 
 // Component: ページコンポーネント
 export const Component = ({ count: initialCount }: LoaderData) => {
- 
-
+  const count= useSignal(0)
+  useEffect(( )=>{
+    alert(1)
+  },[])
   return (
     <div className="">
      
     home module
+    <button onClick={()=>count.value=count.value-1}>-</button>
+
+    {count.value}
+    <button onClick={()=>{count.value=count.value+1}}>+</button>
     </div>
   );
 };

@@ -71,7 +71,8 @@ export const ssr = (
 // ssrWithLoader: loader付きのSSRミドルウェア
 export const ssrWithLoader = <T,>(
   route: RouteModule<T>,
-  Root: FunctionComponent,
+  Root: FunctionComponent<{module_path:string}>,
+  
 ): MiddlewareHandler<{ Bindings: any }> => {
   console.log("ssrWithLoader!");
   return async (c) => {
@@ -98,7 +99,8 @@ export const ssrWithLoader = <T,>(
 
     // 3. index.htmlを取得
     // const res = await c.env.ASSETS.fetch(new URL("/index.html", c.req.url));
-    const { html: view } = await prerender(<Root />);
+    
+    const { html: view } = await prerender(<Root module_path={c.env.module_path}/>);
 
     // 4. SSR結果を埋め込み + 初期データをwindowに注入
     const html = view
@@ -112,7 +114,9 @@ export const ssrWithLoader = <T,>(
           JSON.stringify(
             data,
           )
-        }</script></head>`,
+        };
+          window.module_path="${c.env.module_path}"
+        </script></head>`,
       );
 
     return c.html(html);

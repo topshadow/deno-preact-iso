@@ -13,6 +13,8 @@ import { Kysely } from "kysely";
 import { IDatabase, seed } from "../../db/db.ts";
 import { SysDbStatus } from "../../db/SysDb.ts";
 import { modManager } from "../../manager.ts";
+import { SysPluginStatus } from "../../db/SysPlugin.ts";
+import { DbManager } from "../../db/DbManager.ts";
 export async function change_env(c: Context<BlankEnv>) {
   const { env } = await c.req.json();
   console.log("found api");
@@ -58,14 +60,17 @@ export async function create_db(c: Context<BlankEnv>) {
       const kysely_db = new Kysely<IDatabase>({ dialect: sqlite_dialect });
 
       await seed.createSysDbTable(kysely_db);
+      await seed.createSysPluginTable(kysely_db);
+      await seed.createSysTenantTable(kysely_db);
       await kysely_db.insertInto("sys-db").values({
         status: SysDbStatus.active,
-        create_at: new Date().toString(),
+        create_at: new Date().getTime(),
         url,
         dialect,
       }).execute();
 
       await db_manager.addDb({ db: kysely_db, dialect: Dialect.Sqlite });
+      db_manager.default_db = { db: kysely_db, dialect: Dialect.Sqlite };
     } catch (e) {
       return c.json({ ok: false, msg: e.message });
     }
@@ -101,19 +106,35 @@ async function current_status(c: Context) {
 
 async function install_admin_module(c: Context) {
   const { url } = await c.req.json();
+
+  await db_manager.default_db.db.insertInto("sys-plugin").values({
+    name: "引导模块",
+    url: "./plugin.ts",
+    create_at: Date.now(),
+    status: SysPluginStatus.active,
+    default_pathname:'/plugins/base'
+  }).execute();
   const install_module_result = await modManager.install_module({
     module_url: url,
-    name: "默认管理员",
+    name: "默认管理系统",
     "description": "描述",
   });
   if (install_module_result.ok) {
     await modManager.reset_default_module(url);
+    await db_manager.default_db.db.insertInto("sys-plugin").values({
+      name: "默认管理系统",
+      url: url,
+      create_at: Date.now(),
+      status: SysPluginStatus.active,
+      pathname:'/admin',
+      default_pathname:'/plugins/admin'
+    }).execute();
     return c.json({ ok: true });
   }
   return c.json({ ok: false, msg: install_module_result.msg });
 }
 
 export const sys_api = {
-  GET: { current_status,  },
-  post: {install_admin_module},
+  GET: { current_status },
+  post: { install_admin_module },
 };

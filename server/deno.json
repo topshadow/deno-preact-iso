@@ -12,6 +12,7 @@
         "@std/path": "jsr:@std/path@^1.1.4",
         "class-variance-authority": "npm:class-variance-authority@^0.7.1",
         "clsx": "npm:clsx@^2.1.1",
+        "@24wings/shadcn-pro": "../libs/shadcn-pro/mod.tsx",
         "hono": "npm:hono@^4.11.4",
         "preact": "npm:preact@^10.28.2",
         "preact-iso": "npm:preact-iso@^2.11.0",

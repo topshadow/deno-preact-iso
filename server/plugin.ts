@@ -1,5 +1,5 @@
 import { resolve } from "@std/path";
-import { Compile, ssrWithLoader } from "@24wings/build";
+import { Compile, compile_js, ssrWithLoader } from "@24wings/build";
 import { Root } from "./app/Root.tsx";
 import config from "./deno.json" with { type: "json" };
 import { routes } from "./app/routes.tsx";
@@ -8,14 +8,7 @@ import { change_env, create_db, sys_api, test_db } from "./api/sys/env.ts";
 import { BlankEnv, BlankInput, H } from "hono/types";
 
 const app = new Hono();
-const js = await Compile(
-  import.meta.resolve("./app/client.tsx"),
-  config,
-  {
-    config_path: resolve(Deno.cwd(), "client.json"),
-    // sourcemap:true
-  }, 
-);
+const js = await compile_js(import.meta, config);
 if (Array.isArray(js)) {
   console.error(js);
   Deno.exit(1);

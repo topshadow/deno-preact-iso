@@ -1,18 +1,9 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@24wings/plugins-shopxo-supplier@*": "0.1.0",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.1": "0.1.1",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.2": "0.1.2",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.4": "0.1.4",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.5": "0.1.5",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.6": "0.1.6",
-    "jsr:@24wings/plugins-shopxo-supplier@0.1.7": "0.1.7",
-    "jsr:@std/assert@1": "1.0.16",
     "jsr:@std/dotenv@~0.225.6": "0.225.6",
     "jsr:@std/fs@^1.0.21": "1.0.21",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "jsr:@std/path@*": "1.1.4",
     "jsr:@std/path@^1.1.4": "1.1.4",
     "npm:@preact/signals@^2.2.1": "2.5.1_preact@10.28.2",
     "npm:@preact/signals@^2.5.1": "2.5.1_preact@10.28.2",
@@ -22,7 +13,6 @@
     "npm:kysely@~0.28.9": "0.28.9",
     "npm:libsql@~0.5.22": "0.5.22",
     "npm:mysql2@^3.16.0": "3.16.0",
-    "npm:preact-iso@^2.11.0": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact-render-to-string@^6.6.5": "6.6.5_preact@10.28.2",
     "npm:preact@^10.26.6": "10.28.2",
@@ -30,68 +20,6 @@
     "npm:tailwind-merge@^3.4.0": "3.4.0"
   },
   "jsr": {
-    "@24wings/plugins-shopxo-supplier@0.1.0": {
-      "integrity": "8c506d7d68fe28282b07181cac4e507dee3946f5e85f838f2f226132dd708467",
-      "dependencies": [
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.1": {
-      "integrity": "a82887aecebcd66c98439cfcf8158716a1ac3c981def5bbf249134d2e4e727b3",
-      "dependencies": [
-        "npm:hono",
-        "npm:preact-iso@^2.11.1",
-        "npm:preact-render-to-string",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.2": {
-      "integrity": "e9d060790e6c91fff0e6a21cbf30f52cc095b65e1f10ef9d1578da8d12a1cb7b",
-      "dependencies": [
-        "jsr:@std/path@^1.1.4",
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.4": {
-      "integrity": "a96b8cda9954f72d1b5fc1d3f3510801fa1b1b00f524eb1456bb6692ae97234f",
-      "dependencies": [
-        "jsr:@std/path@^1.1.4",
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.5": {
-      "integrity": "34c9056f185abb517279ad694eb69953430e084e9b6d9134d49cd69a79b2c805",
-      "dependencies": [
-        "jsr:@std/path@^1.1.4",
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.6": {
-      "integrity": "2bb14def0647314aacc5628a1582cb92efe94ee275000d39ae059d68711a3c0c",
-      "dependencies": [
-        "jsr:@std/path@^1.1.4",
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@24wings/plugins-shopxo-supplier@0.1.7": {
-      "integrity": "f0352ecfff7a5b1fa845620d15dd22b3c7b694d11bbb16d9b932e65f94c5f0a9",
-      "dependencies": [
-        "jsr:@std/path@^1.1.4",
-        "npm:hono",
-        "npm:preact@^10.28.2"
-      ]
-    },
-    "@std/assert@1.0.16": {
-      "integrity": "6a7272ed1eaa77defe76e5ff63ca705d9c495077e2d5fd0126d2b53fc5bd6532",
-      "dependencies": [
-        "jsr:@std/internal"
-      ]
-    },
     "@std/dotenv@0.225.6": {
       "integrity": "1d6f9db72f565bd26790fa034c26e45ecb260b5245417be76c2279e5734c421b"
     },
@@ -99,7 +27,7 @@
       "integrity": "d720fe1056d78d43065a4d6e0eeb2b19f34adb8a0bc7caf3a4dbf1d4178252cd",
       "dependencies": [
         "jsr:@std/internal",
-        "jsr:@std/path@^1.1.4"
+        "jsr:@std/path"
       ]
     },
     "@std/internal@1.0.12": {
@@ -217,12 +145,12 @@
       "integrity": "sha512-U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA==",
       "tarball": "https://registry.npmmirror.com/hono/-/hono-4.11.4.tgz"
     },
-    "iconv-lite@0.7.1": {
-      "integrity": "sha512-2Tth85cXwGFHfvRgZWszZSvdo+0Xsqmw8k8ZwxScfcBneNUraK+dxRxRm24nszx80Y0TVio8kKLt5sLE7ZCLlw==",
+    "iconv-lite@0.7.2": {
+      "integrity": "sha512-im9DjEDQ55s9fL4EYzOAv0yMqmMBSZp6G0VvFyTMPKWxiSBHUj9NW/qqLmXUwXrrM7AvqSlTCfvqRb0cM8yYqw==",
       "dependencies": [
         "safer-buffer"
       ],
-      "tarball": "https://registry.npmmirror.com/iconv-lite/-/iconv-lite-0.7.1.tgz"
+      "tarball": "https://registry.npmmirror.com/iconv-lite/-/iconv-lite-0.7.2.tgz"
     },
     "is-property@1.0.2": {
       "integrity": "sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==",
@@ -356,6 +284,7 @@
           "jsr:@std/path@^1.1.4",
           "npm:@preact/signals@^2.5.1",
           "npm:class-variance-authority@~0.7.1",
+          "npm:clsx@^2.1.1",
           "npm:hono@^4.11.4",
           "npm:preact-iso@^2.11.0",
           "npm:preact@^10.28.2",
