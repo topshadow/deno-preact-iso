@@ -115,7 +115,7 @@ async function install_admin_module(c: Context) {
     default_pathname:'/plugins/base'
   }).execute();
   const install_module_result = await modManager.install_module({
-    module_url: url,
+    url: url,
     name: "默认管理系统",
     "description": "描述",
   });

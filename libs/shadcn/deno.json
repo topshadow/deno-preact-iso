@@ -4,7 +4,10 @@
         "jsx": "precompile",
         "jsxImportSource": "preact"
     },
-    "version": "0.0.1",
+    "tasks": {
+        "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
+    },
+    "version": "0.0.2",
     "license": "MIT",
     "exports": "./mod.tsx",
     "imports": {

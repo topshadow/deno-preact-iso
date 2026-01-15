@@ -59,21 +59,6 @@ export class ModuleManager {
       return { ok: false, msg: "找不到改模块" };
     }
   }
-  // 刷新所有插件
-  // async refresh_all_plugin(plugins: Module[]) {
-  //   for (let p of plugins) {
-  //     if (!p.mod) {
-  //       p.mod = await import(p.url);
-  //     }
-  //     if (p.mod) {
-  //       if (p.mod.default) {
-  //         await this.install_module({ mod: m.default, ...p });
-  //       }
-  //     } else {
-  //       console.error(" install module error, url is:", p.url);
-  //     }
-  //   }
-  // }
 
   /**通过jsr 获取安装包的元数据 */
   async fetch_module_metada(
@@ -106,22 +91,34 @@ export class ModuleManager {
       }
       return r;
     });
-    handle_mod = handle_mod || this.default_module;
+    if (pathname == "/") {
+      handle_mod = this.default_module;
+    } else {
+      handle_mod = handle_mod || this.default_module;
+    }
 
     // console.log(pathname, handle_mod, this.module_list);
     if (handle_mod) {
       if (handle_mod.mod) {
-        console.log("ok dispatch request", c.req.url);
+        const module_path = handle_mod.pathname || handle_mod.default_pathname;
+        console.log(
+          "ok dispatch request",
+          c.req.url,
+          "module_path:",
+          module_path,
+        );
+
+        const url = new URL(c.req.url);
+        url.pathname = url.pathname.replace(module_path, "");
+        console.log("修改后的url", url);
+
         return await handle_mod.mod.request(
-          c.req.url.replace(
-            handle_mod.pathname || handle_mod.default_pathname,
-            "",
-          ),
+          url.href,
           c.req.raw,
           {
-            "module_path": "/admin",
+            module_path,
             Bindings: {
-              module_path: "/admin",
+              module_path,
               default_db: c.get("default_db"),
             },
           },

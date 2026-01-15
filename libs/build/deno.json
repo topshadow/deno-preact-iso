@@ -1,10 +1,10 @@
 {
   "name": "@24wings/build",
   "exports": "./mod.ts",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "license": "mit",
   "tasks": {
-    "dev": "deno run --watch compileJs.ts"
+    "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",

@@ -4,9 +4,11 @@
     },
     "workspace": [
         "./server",
-        "./libs/build",
         "./libs/shadcn",
         "./libs/shadcn-pro",
-        "./plugins/admin"
+        "./plugins/admin",
+        "./libs/build"
+
+
     ]
 }

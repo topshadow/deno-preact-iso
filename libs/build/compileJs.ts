@@ -1,5 +1,5 @@
 import { resolve } from "@std/path";
- async function compile(
+async function compile(
   input_path: string,
   config: any,
   opt?: {
@@ -9,7 +9,6 @@ import { resolve } from "@std/path";
     sourcemap?: boolean;
   },
 ): Promise<string | Deno.bundle.Message[]> {
-  // console.log(config);
   if (!config.compilerOptions) {
     config.compilerOptions = {
       "jsx": "react-jsx",
@@ -21,7 +20,7 @@ import { resolve } from "@std/path";
 
   const dir = await Deno.makeTempDir();
   const config_file_path = opt?.config_path ?? resolve(dir, "deno.json");
-  // console.log(config);
+
   Deno.writeTextFileSync(config_file_path, JSON.stringify(config));
   // console.log(config_file_path);
   // let external=[     "--packages",
@@ -79,9 +78,21 @@ export async function compile_js(
   { resolve, url }: ImportMeta,
   config: any,
 ) {
-  const endpoint = resolve("./app/client.tsx");
-  const cwd = new URL(".", url.replace("plugin.ts", ""));
-  const config_path = new URL("./client.tsx", url.replaceAll("plugin.ts", ""))
-    .href.replace("file:///", "");
-  return await compile(endpoint, config, { cwd, config_path });
+  // 如果是jsr  则从jsr下载js文件 ,如果是本地则编译
+  const is_jsr = url.includes("jsr");
+  if (is_jsr) {
+    console.log("downloading from jsr ");
+    const download_js = await fetch(
+      `https://jsr.io/${config.name}/${config.version}/client.js`,
+    ).then((r) => r.text());
+    console.log("download js content:", download_js);
+    return download_js;
+  } else {
+    const endpoint = resolve("./app/client.tsx");
+    const cwd = new URL(".", url.replace("plugin.ts", ""));
+    // const config_path = new URL("./client.tsx", url.replaceAll("plugin.ts", ""))
+    //   .href.replace("file:///", "");
+
+    return await compile(endpoint, config, { cwd });
+  }
 }

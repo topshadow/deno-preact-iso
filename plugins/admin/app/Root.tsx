@@ -80,7 +80,7 @@ export function Root({module_path}:{module_path:string}) {
       </head>
       <body class="bg-background text-foreground">
         <div id="root"></div>
-        <script type="module" src={module_path+"/client.js"}></script>
+        <script type="module" src={(module_path=='/'?'':module_path) +"/client.js"}></script>
       </body>
     </html>
   );

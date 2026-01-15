@@ -58,12 +58,14 @@ export const Component = ({ count: initialCount }: LoaderData) => {
               defaultValue={dialect.value}
                 value={dialect.value}
                 onChange={(e) => {
+                  console.log(e)
                   dialect.value = e.target.value;
                   valid.value = false;
                 }}
+ 
               >
-                <option value={Dialect.Mysql}>Mysql</option>
-                <option value={Dialect.Sqlite}>Sqlite</option>
+                <option onSelect={()=>dialect.value=Dialect.Mysql} value={Dialect.Mysql} selected={dialect.value==Dialect.Mysql} >Mysql</option>
+                <option onSelect={()=>dialect.value=Dialect.Sqlite} value={Dialect.Sqlite} selected={dialect.value==Dialect.Sqlite}>Sqlite</option>
               </select>
             </div>
           </div>

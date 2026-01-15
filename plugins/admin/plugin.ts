@@ -4,12 +4,12 @@ import { Hono } from "hono";
 import { routes } from "./app/routes.tsx";
 
 import config from "./deno.json" with { type: "json" };
-import { Compile, compile_js, ssrWithLoader } from "@24wings/build";
+import {  compile_js, ssrWithLoader } from "@24wings/build";
 import { Root } from "./app/Root.tsx";
 export type CloudflareBindings = {
   ASSETS: any;
   DB: any;
-};
+}; 
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 
@@ -34,7 +34,7 @@ console.log(`cwd:`, cwd);
 //   sourcemap:true
 
 // });
-const js = compile_js(import.meta, config);
+const js =await compile_js(import.meta, config);
 if (Array.isArray(js)) {
   // console.log(js);
   Deno.exit();
