@@ -489,6 +489,9 @@
           "jsr:@std/assert@1",
           "jsr:@std/fs@^1.0.21",
           "jsr:@std/path@^1.1.4",
+          "npm:@orpc/openapi@^1.13.4",
+          "npm:@orpc/server@^1.13.4",
+          "npm:@orpc/zod@^1.13.4",
           "npm:hono@^4.11.4",
           "npm:preact-iso@^2.11.1",
           "npm:preact-render-to-string@^6.6.5",
@@ -509,13 +512,18 @@
           "jsr:@24wings/build@0.0.7",
           "jsr:@std/fs@^1.0.21",
           "jsr:@std/path@^1.1.4",
+          "npm:@orpc/client@^1.13.4",
+          "npm:@orpc/openapi@^1.13.4",
+          "npm:@orpc/server@^1.13.4",
+          "npm:@orpc/zod@^1.13.4",
           "npm:@preact/signals@^2.5.1",
           "npm:class-variance-authority@~0.7.1",
           "npm:clsx@^2.1.1",
           "npm:hono@^4.11.4",
           "npm:preact-iso@^2.11.0",
           "npm:preact@^10.28.2",
-          "npm:tailwind-merge@^3.4.0"
+          "npm:tailwind-merge@^3.4.0",
+          "npm:zod@^4.3.5"
         ]
       },
       "server": {

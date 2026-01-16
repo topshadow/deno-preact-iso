@@ -8,7 +8,7 @@ if (typeof window == "undefined") {
   base = location.origin;
 }
 const link = new RPCLink({
-  url: base  + "/plugins/base/rpc",
+  url: base + "/plugins/base/rpc",
   headers: { Authorization: "Bearer token" },
 });
 

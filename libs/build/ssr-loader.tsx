@@ -9,6 +9,7 @@ import type { FunctionComponent } from "preact";
 import { prerender } from "preact-iso";
 import { locationStub } from "preact-iso/prerender";
 import { renderToString } from "preact-render-to-string";
+import { Root } from "./Root.tsx";
 // import { Root } from "./src/Root.tsx";
 export type SSRElement = () => JSX.Element;
 
@@ -25,6 +26,7 @@ export type RouteModule<T = unknown> = {
   loader?: (c: Context<{ Bindings: any }>) => Promise<T>;
   Component: (props: any) => JSX.Element;
   Head?: (c: Context<{ Bindings: any }>) => Promise<string>;
+  path: string;
 };
 
 export const ssr = (
@@ -125,7 +127,7 @@ export const ssrWithLoader = <T,>(
   };
 };
 
-export function ssrRoutes<T>(routes: RouteModule<T>[], app: Hono, Root) {
+export function ssrRoutes<T>(routes: RouteModule<T>[], app: Hono) {
   routes.forEach((route) => {
     app.get(
       route.path,

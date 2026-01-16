@@ -7,6 +7,9 @@
     "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
   },
   "imports": {
+    "@orpc/openapi": "npm:@orpc/openapi@^1.13.4",
+    "@orpc/server": "npm:@orpc/server@^1.13.4",
+    "@orpc/zod": "npm:@orpc/zod@^1.13.4",
     "@std/assert": "jsr:@std/assert@1",
     "@std/fs": "jsr:@std/fs@^1.0.21",
     "@std/path": "jsr:@std/path@^1.1.4",

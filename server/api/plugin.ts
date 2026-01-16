@@ -1,8 +1,8 @@
 import { os } from "@orpc/server";
 import * as z from "zod";
-import { db_manager } from "../../db/mod.tsx";
-import { SysPluginStatus } from "../../db/SysPlugin.ts";
-import { modManager } from "../../manager.ts";
+import { db_manager } from "../db/mod.tsx";
+import { SysPluginStatus } from "../db/SysPlugin.ts";
+import { modManager } from "../manager.ts";
 import { OutPut } from "./types.ts";
 
 

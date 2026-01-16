@@ -1,15 +1,15 @@
-import { load_env, reset_env, write_env } from "../../config.ts";
-import { Dialect } from "../../app/types/Dialect.ts";
+import { load_env, reset_env, write_env } from "../config.ts";
+import { Dialect } from "../app/types/Dialect.ts";
 import { exists } from "@std/fs";
 import { DatabaseSync } from "node:sqlite";
 import { createConnection } from "mysql2/promise";
 import { SqliteDialect } from "kysely";
 import SQLite from "libsql";
 import * as z from "zod";
-import { db_manager } from "../../db/mod.tsx";
+import { db_manager } from "../db/mod.tsx";
 import { Kysely } from "kysely";
-import { type IDatabase, seed } from "../../db/db.ts";
-import { SysDbStatus } from "../../db/SysDb.ts";
+import { type IDatabase, seed } from "../db/db.ts";
+import { SysDbStatus } from "../db/SysDb.ts";
 
 import { os } from "@orpc/server";
 import { OutPut } from "./types.ts";

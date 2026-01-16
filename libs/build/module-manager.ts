@@ -1,6 +1,5 @@
 import type { Context, Hono } from "hono";
 import type { BlankEnv, BlankSchema } from "hono/types";
-import { relative, resolve } from "@std/path";
 const API_ENDPOINT = `https://api.jsr.io`;
 export type Package = { scope: string; name: string };
 

@@ -7,5 +7,4 @@ export const routes = [
   { path: "/dash", ...Dash },
   { path: "/dash/tasker", ...Tasker },
   { path: "/dash/plugin-manage", ...PluginManager },
-] as const;
-
+];
