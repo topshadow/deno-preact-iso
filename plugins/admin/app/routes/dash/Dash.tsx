@@ -1,6 +1,7 @@
 import { DashLayout } from "@24wings/shadcn/pro";
 import { get_menus_with_module_path } from "../../data/menus.tsx";
-export const loader = async (c) => {
+import type { Context } from "hono";
+export const loader = (c: Context) => {
   const module_path = c.env.module_path as string;
 
   return { count: 1, menus: get_menus_with_module_path(module_path) };

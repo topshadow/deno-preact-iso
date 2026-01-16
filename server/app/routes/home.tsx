@@ -1,5 +1,6 @@
 import { useEffect } from "preact/hooks";
-import { Button, cn, IFilter, Input, Table } from "@24wings/shadcn";
+import { type IFilter, ProTable } from "@24wings/shadcn/pro";
+import { Button, Input } from "@24wings/shadcn";
 import { useSignal } from "@preact/signals";
 import { Dialect } from "../types/Dialect.ts";
 
@@ -12,17 +13,17 @@ import { orpc_client } from "@24wings/server/orpc-client";
 // import Header from "../components/Header";
 
 // loader: SSR時にデータ取得
-export const loader = async () => {
+export const loader = () => {
   return { count: 1 };
 };
-export const Head = async () => {
+export const Head = () => {
   return `<meta itemType={'keyword'}><span>关键字</span>
   </meta>`;
 };
 export type LoaderData = Awaited<ReturnType<typeof loader>>;
 
 // Component: ページコンポーネント
-export const Component = ({ count: initialCount }: LoaderData) => {
+export const Component = ({}: LoaderData) => {
   const valid = useSignal(false);
   const dialect = useSignal(Dialect.Sqlite);
   const database_url = useSignal("");
@@ -157,7 +158,7 @@ export const Component = ({ count: initialCount }: LoaderData) => {
         <main>
           <h1>安装成功 是否安装推荐的后台管理界面 选择模板 安装</h1>
           <div class="mt-10">
-            <Table
+            <ProTable
               table={plugins}
               cols={[{ label: "地址", render: (r) => r.url }, {
                 label: "名称",
@@ -183,7 +184,7 @@ export const Component = ({ count: initialCount }: LoaderData) => {
                 return Promise.resolve(plugins.value);
               }}
             >
-            </Table>
+            </ProTable>
           </div>
         </main>
       )}

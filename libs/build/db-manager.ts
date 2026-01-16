@@ -1,18 +1,9 @@
 import { Kysely, SqliteDialect } from "kysely";
 import SQLite from "libsql";
 import type { EnvObj } from "./config.ts";
-import type { SysDataSourceTable } from "./db/SysDb.ts";
-import type { SysPluginTable } from "./db/SysPlugin.ts";
-import type { SysTenantTable } from "./db/SysTenant.ts";
-export interface IDatabase {
-  "sys-db": SysDataSourceTable;
-  "sys-plugin": SysPluginTable;
-  "sys-tenant": SysTenantTable;
-}
-export enum Dialect {
-  Mysql = "Mysql",
-  Sqlite = "Sqlite",
-}
+import  {Dialect} from './types/Dialect.ts';
+import type { IDatabase } from "./types/db.ts";
+
 
 enum TenantStrage {
   Domain = "Domain",
@@ -21,7 +12,7 @@ enum TenantStrage {
 }
 export type IDb = {
   db: Kysely<IDatabase>;
-  dialect: Dialect;
+  dialect: keyof typeof  Dialect;
 };
 export class DbManager {
   dbs: IDb[] = [];
@@ -50,3 +41,4 @@ export class DbManager {
     }
   }
 }
+export * from './seed.ts';

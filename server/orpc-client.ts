@@ -4,6 +4,8 @@ import { RPCLink } from "@orpc/client/fetch";
 import type { router } from "./plugin.ts";
 let base = "";
 if (typeof window == "undefined") {
+  //TODO  Deno环境设置服务器内部模块调用接口
+  base = "http://localhost:8000";
 } else {
   base = location.origin;
 }

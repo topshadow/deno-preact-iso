@@ -6,7 +6,7 @@ import { load_env } from "./config.ts";
 import { modManager } from "./manager.ts";
 import { db_manager } from "./db/mod.tsx";
 import { parseArgs } from "@std/cli";
-import { SysPluginStatus, type SysPluginWithModule } from "./db/SysPlugin.ts";
+import { SysPluginStatus, type SysPluginWithModule } from "@24wings/build/types";
 
 const args = parseArgs<{ m: string; d?: string; help?: boolean }>(Deno.args);
 if (args.help) {

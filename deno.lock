@@ -500,7 +500,8 @@
           "npm:mysql2@^3.16.1",
           "npm:preact-iso@^2.11.1",
           "npm:preact-render-to-string@^6.6.5",
-          "npm:preact@^10.28.2"
+          "npm:preact@^10.28.2",
+          "npm:zod@^4.3.5"
         ]
       },
       "libs/shadcn": {

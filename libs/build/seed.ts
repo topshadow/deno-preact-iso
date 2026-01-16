@@ -1,13 +1,8 @@
 import type { Kysely } from "kysely";
-import type { SysDatasource, SysDataSourceTable } from "./db/SysDb.ts";
-import type { SysPlugin, SysPluginTable } from "./db/SysPlugin.ts";
-import type { SysTenant, SysTenantTable } from "./db/SysTenant.ts";
-
-export interface IDatabase {
-  "sys-db": SysDataSourceTable;
-  "sys-plugin": SysPluginTable;
-  "sys-tenant": SysTenantTable;
-}
+import type { SysDatasource } from "./types/SysDb.ts";
+import type { SysPlugin } from "./types/SysPlugin.ts";
+import type { SysTenant } from "./types/SysTenant.ts";
+import type { IDatabase } from "./types/db.ts";
 
 async function createSysDbTable(db: Kysely<IDatabase>) {
   await db.schema.createTable("sys-db")
@@ -26,9 +21,13 @@ async function createSysPluginTable(db: Kysely<IDatabase>) {
     .addColumn("name" satisfies keyof SysPlugin, "text")
     .addColumn("url" satisfies keyof SysPlugin, "text")
     .addColumn("create_at" satisfies keyof SysPlugin, "integer")
-    .addColumn('pathname' satisfies keyof SysPlugin,'text')
-    .addColumn('default_pathname' satisfies keyof SysPlugin,'text',c=>c.notNull())
-    .addColumn('tenant_id' satisfies keyof SysPlugin, 'integer')
+    .addColumn("pathname" satisfies keyof SysPlugin, "text")
+    .addColumn(
+      "default_pathname" satisfies keyof SysPlugin,
+      "text",
+      (c) => c.notNull(),
+    )
+    .addColumn("tenant_id" satisfies keyof SysPlugin, "integer")
     // .addColumn(''  satisfies keyof SysPlugin ,'text')
     .execute();
 }

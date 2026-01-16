@@ -8,8 +8,9 @@ import SQLite from "libsql";
 import * as z from "zod";
 import { db_manager } from "../db/mod.tsx";
 import { Kysely } from "kysely";
-import { type IDatabase, seed } from "../db/db.ts";
-import { SysDbStatus } from "../db/SysDb.ts";
+
+import { seed } from "@24wings/build/db-manager";
+import { type IDatabase, SysDbStatus } from "@24wings/build/types";
 
 import { os } from "@orpc/server";
 import { OutPut } from "./types.ts";

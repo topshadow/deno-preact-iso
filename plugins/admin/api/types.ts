@@ -10,7 +10,3 @@ export const DataSouceSchema = z.object({
   dialect: z.string(),
 });
 
-export type OContext = {
-  db_manager: DbManager;
-  module_path: string;
-};

@@ -4,14 +4,13 @@ import type { Hono, Next } from "hono";
 import { onError, type Router } from "@orpc/server";
 import {
   OpenAPIGenerator,
-  OpenAPIGeneratorGenerateOptions,
+  type OpenAPIGeneratorGenerateOptions,
 } from "@orpc/openapi";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 export function orpc_scalar_html(
   c: Context,
   opt?: { cdn?: string; endpoint?: string },
 ) {
-  // let cdn = `https://cdn.jsdelivr.net/npm/@scalar/api-reference`;
   const cdn = opt?.cdn ||
     `https://cdn.bootcdn.net/ajax/libs/scalar-api-reference/1.36.2/standalone.min.js`;
   const html = `
@@ -51,10 +50,10 @@ export function orpc_scalar_html(
 export const orpc_handle =
   (handler: RPCHandler<Record<string, string>>) =>
   async (c: Context, next: Next) => {
-    console.log('orpc_handle',c.env);
+    console.log("orpc_handle", c.env);
     const { matched, response } = await handler.handle(c.req.raw, {
       prefix: "/rpc",
-      context: {...c.env}, // Provide initial context if needed
+      context: { ...c.env }, // Provide initial context if needed
     });
 
     if (matched) {
