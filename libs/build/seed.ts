@@ -1,7 +1,7 @@
 import type { Kysely } from "kysely";
-import type { SysDatasource, SysDataSourceTable } from "./SysDb.ts";
-import type { SysPlugin, SysPluginTable } from "./SysPlugin.ts";
-import type { SysTenant, SysTenantTable } from "./SysTenant.ts";
+import type { SysDatasource, SysDataSourceTable } from "./db/SysDb.ts";
+import type { SysPlugin, SysPluginTable } from "./db/SysPlugin.ts";
+import type { SysTenant, SysTenantTable } from "./db/SysTenant.ts";
 
 export interface IDatabase {
   "sys-db": SysDataSourceTable;

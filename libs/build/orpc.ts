@@ -7,7 +7,10 @@ import {
   OpenAPIGeneratorGenerateOptions,
 } from "@orpc/openapi";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
-export function orpc_scalar_html(c: Context, opt?: {cdn?: string,endpoint?:string}) {
+export function orpc_scalar_html(
+  c: Context,
+  opt?: { cdn?: string; endpoint?: string },
+) {
   // let cdn = `https://cdn.jsdelivr.net/npm/@scalar/api-reference`;
   const cdn = opt?.cdn ||
     `https://cdn.bootcdn.net/ajax/libs/scalar-api-reference/1.36.2/standalone.min.js`;
@@ -29,7 +32,7 @@ export function orpc_scalar_html(c: Context, opt?: {cdn?: string,endpoint?:strin
         <script type="module">
         console.log(Scalar)
           Scalar.createApiReference('#app', {
-            url: '${opt?.endpoint||'spec.json'}',
+            url: '${opt?.endpoint || "spec.json"}',
             authentication: {
               securitySchemes: {
                 bearerAuth: {
@@ -48,9 +51,10 @@ export function orpc_scalar_html(c: Context, opt?: {cdn?: string,endpoint?:strin
 export const orpc_handle =
   (handler: RPCHandler<Record<string, string>>) =>
   async (c: Context, next: Next) => {
+    console.log('orpc_handle',c.env);
     const { matched, response } = await handler.handle(c.req.raw, {
       prefix: "/rpc",
-      context: {}, // Provide initial context if needed
+      context: {...c.env}, // Provide initial context if needed
     });
 
     if (matched) {
@@ -87,5 +91,5 @@ export const setup_openapi = <T extends Context>(
     const spec = await openAPIGenerator.generate(api, options);
     return c.json(spec);
   });
-  app.get('/ui.html',c=>orpc_scalar_html(c))
+  app.get("/ui.html", (c) => orpc_scalar_html(c));
 };

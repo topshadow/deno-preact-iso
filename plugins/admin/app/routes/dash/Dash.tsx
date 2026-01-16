@@ -1,16 +1,14 @@
 import { DashLayout } from "@24wings/shadcn/pro";
-export const Component = (props) => {
-  console.log("dash props", props);
+import { get_menus_with_module_path } from "../../data/menus.tsx";
+export const loader = async (c) => {
+  const module_path = c.env.module_path as string;
+
+  return { count: 1, menus: get_menus_with_module_path(module_path) };
+};
+export const Component = ({ menus }: Awaited<ReturnType<typeof loader>>) => {
   return (
     <DashLayout
-      menus={[{
-        title: "开发者",
-        children: [
-          { path: "/", title: "数据源" },
-          { path: "/dash/plugin-manage", title: "插件管理" },
-          { path: "/tenant", title: "租户管理" },
-        ],
-      }]}
+      menus={menus}
     >
       内容
     </DashLayout>

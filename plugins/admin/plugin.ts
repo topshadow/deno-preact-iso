@@ -3,14 +3,13 @@ import { routes } from "./app/routes.tsx";
 import config from "./deno.json" with { type: "json" };
 import { compile_js, setup_openapi, ssrRoutes } from "@24wings/build";
 
-import { health } from "./api/datasource.ts";
+
 
 import * as api from "./api/mod.ts";
 const app = new Hono();
 
-export const router = {
-  health,
-};
+export const router = api;
+
 
 let js = await compile_js(import.meta, config);
 if (Array.isArray(js)) {

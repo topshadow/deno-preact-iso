@@ -134,13 +134,7 @@ export class ModuleManager {
         return await handle_mod.mod.request(
           url.href,
           c.req.raw,
-          {
-            module_path,
-            Bindings: {
-              module_path,
-              default_db: c.get("default_db"),
-            },
-          },
+          {module_path,db_manager:c.get('db_manager')},
         );
       }
     }

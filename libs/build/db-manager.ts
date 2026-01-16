@@ -1,8 +1,19 @@
 import { Kysely, SqliteDialect } from "kysely";
-import { Dialect } from "../app/types/Dialect.ts";
-import type { IDatabase } from "./db.ts";
 import SQLite from "libsql";
-import type { EnvObj } from "../config.ts";
+import type { EnvObj } from "./config.ts";
+import type { SysDataSourceTable } from "./db/SysDb.ts";
+import type { SysPluginTable } from "./db/SysPlugin.ts";
+import type { SysTenantTable } from "./db/SysTenant.ts";
+export interface IDatabase {
+  "sys-db": SysDataSourceTable;
+  "sys-plugin": SysPluginTable;
+  "sys-tenant": SysTenantTable;
+}
+export enum Dialect {
+  Mysql = "Mysql",
+  Sqlite = "Sqlite",
+}
+
 enum TenantStrage {
   Domain = "Domain",
   SubDomain = "SubDomain",
@@ -33,9 +44,9 @@ export class DbManager {
       const kysely_db = new Kysely<IDatabase>({ dialect: sqlite_dialect });
       this.default_db = { db: kysely_db, dialect: Dialect.Sqlite };
       this.addDb(this.default_db);
-      console.log('连接成功')
-    }else{
-      console.log('尚未实现')
+      console.log("连接成功");
+    } else {
+      console.log("尚未实现");
     }
   }
 }

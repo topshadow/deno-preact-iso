@@ -23,7 +23,7 @@ type SSROptions = {
 
 // ルートモジュールの型定義
 export type RouteModule<T = unknown> = {
-  loader?: (c: Context<{ Bindings: any }>) => Promise<T>;
+  loader?: (c: Context<{ Bindings: any }>) => Promise<T>|T;
   Component: (props: any) => JSX.Element;
   Head?: (c: Context<{ Bindings: any }>) => Promise<string>;
   path: string;

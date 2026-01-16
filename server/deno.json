@@ -2,7 +2,8 @@
     "name": "@24wings/server",
     "exports": {
         "./plugin": "./plugin.ts",
-        "./orpc-client": "./orpc-client.ts"
+        "./orpc-client": "./orpc-client.ts",
+        "./server": "./server.tsx"
     },
     "tasks": {
         "server": "deno run -A  --unstable-raw-imports  --unstable-bundle --watch server.tsx",
@@ -39,8 +40,9 @@
         "jsx": "precompile",
         "jsxImportSource": "preact"
     },
-
-    "publish":{
-        "exclude": ["tests"]
+    "publish": {
+        "exclude": [
+            "tests"
+        ]
     }
 }

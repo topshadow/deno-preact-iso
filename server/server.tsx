@@ -16,7 +16,7 @@ if (args.help) {
 `);
 }
 app.use(async (c, next) => {
-  c.set("default_db", db_manager.default_db);
+  c.set("db_manager", db_manager);
   await next();
 });
 

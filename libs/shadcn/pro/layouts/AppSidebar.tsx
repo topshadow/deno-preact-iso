@@ -5,7 +5,8 @@ import type { MenuItem } from "./Menu.tsx";
 
 import type { ComponentChildren, JSX } from "preact";
 
-import { useSignal } from "@preact/signals";
+import { type Signal, useSignal } from "@preact/signals";
+import { useEffect } from "preact/hooks";
 
 export const default_menus: MenuItem[] = [{
   title: "供应商",
@@ -54,7 +55,7 @@ export const default_config = {
 
 export function AppSidebar(
   { menus, children, title, ...props }: {
-    menus?: MenuItem[];
+    menus?: Signal<MenuItem[]>;
     title?: string;
 
     open?: boolean;
@@ -66,8 +67,8 @@ export function AppSidebar(
   if (platform.is_browser) {
     path.value = new URL(location.href).pathname;
   }
-  menus = menus || default_menus;
-  const actvie_menu = menus.find((m) =>
+  // menus = menus || default_menus;
+  const actvie_menu = menus?.value.find((m) =>
     m.children?.find((sub) => path.value.includes(sub.path as string))
   );
   const current_menu = actvie_menu?.children?.find((sub) =>
@@ -82,7 +83,7 @@ export function AppSidebar(
           : "w-0 invisible"}
         id="left-panel"
       >
-        <LeftPanel menus={menus} path="/" title={title} />
+        <LeftPanel menus={menus} title={title} />
       </Sidebar.Panel>
 
       <Sidebar.Content class="m-0 p-0">
@@ -95,11 +96,15 @@ export function AppSidebar(
 }
 
 function LeftPanel(
-  { menus, path, title }:
+  { menus, title }:
     & ComponentChildren
-    & { menus?: MenuItem[]; path: string; title?: string },
+    & { menus?: Signal<MenuItem[]>; path: string; title?: string },
 ) {
-  menus = menus || default_menus;
+  const path = useSignal("/");
+  useEffect(() => {
+    path.value = location.pathname;
+  }, []);
+
   return (
     <div>
       <div class="flex items-center justify-center h-16 border-b border-border shadow-sm">
@@ -127,7 +132,7 @@ function LeftPanel(
       </div>
 
       <nav class="flex-1 overflow-y-auto py-4 px-2">
-        {menus.map((m) => (
+        {menus?.value.map((m) => (
           <>
             <div class="space-y-1">
               <h3 class="px-4 text-xs uppercase tracking-wider font-semibold text-muted-foreground">
@@ -137,7 +142,7 @@ function LeftPanel(
                 <a
                   href={sub.path}
                   class={"flex items-center px-4 py-2 text-foreground   rounded-md " +
-                    (path.includes(sub.path || "")
+                    (path.value == sub.path
                       ? "bg-primary text-primary-foreground"
                       : "text-foreground")}
                 >
