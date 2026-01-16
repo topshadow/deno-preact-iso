@@ -2,7 +2,7 @@
  * 引用 https://github.com/yusukelatte/hinoco
  */
 
-import type { Context, MiddlewareHandler } from "hono";
+import type { Context, Hono, MiddlewareHandler } from "hono";
 import type { StatusCode } from "hono/utils/http-status";
 import type { JSX } from "preact";
 import type { FunctionComponent } from "preact";
@@ -73,7 +73,7 @@ export const ssrWithLoader = <T,>(
   route: RouteModule<T>,
   Root: FunctionComponent<{ module_path: string }>,
 ): MiddlewareHandler<{ Bindings: any }> => {
-  console.log("ssrWithLoader!");
+  // console.log("ssrWithLoader!");
   return async (c) => {
     // console.log("ssrWithLoader called!");
     const path = new URL(c.req.url).pathname;
@@ -124,3 +124,12 @@ export const ssrWithLoader = <T,>(
     return c.html(html);
   };
 };
+
+export function ssrRoutes<T>(routes: RouteModule<T>[], app: Hono, Root) {
+  routes.forEach((route) => {
+    app.get(
+      route.path,
+      ssrWithLoader(route, Root),
+    );
+  });
+}

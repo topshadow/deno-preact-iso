@@ -1,5 +1,5 @@
-import { JSX } from "preact/jsx-runtime";
-import { cn } from "./utils/cn.tsx";
+import type { JSX } from "preact/jsx-runtime";
+import { cn } from "../utils/cn.tsx";
 const Card = ({ class: className, ...props }: JSX.IntrinsicElements["div"]) => (
   <div
     class={cn(

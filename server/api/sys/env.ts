@@ -1,5 +1,3 @@
-import { BlankEnv } from "hono/types";
-import { Context } from "hono";
 import { load_env, reset_env, write_env } from "../../config.ts";
 import { Dialect } from "../../app/types/Dialect.ts";
 import { exists } from "@std/fs";
@@ -7,78 +5,87 @@ import { DatabaseSync } from "node:sqlite";
 import { createConnection } from "mysql2/promise";
 import { SqliteDialect } from "kysely";
 import SQLite from "libsql";
-
+import * as z from "zod";
 import { db_manager } from "../../db/mod.tsx";
 import { Kysely } from "kysely";
-import { IDatabase, seed } from "../../db/db.ts";
+import { type IDatabase, seed } from "../../db/db.ts";
 import { SysDbStatus } from "../../db/SysDb.ts";
-import { modManager } from "../../manager.ts";
-import { SysPluginStatus } from "../../db/SysPlugin.ts";
-import { DbManager } from "../../db/DbManager.ts";
-export async function change_env(c: Context<BlankEnv>) {
-  const { env } = await c.req.json();
-  console.log("found api");
-  if (typeof env == "object") {
-    await write_env(env);
-    await reset_env(env);
-  }
-  return c.json({ ok: true });
-}
 
-export async function test_db(c: Context<BlankEnv>) {
-  const { url, dialect } = await c.req.json();
-  if (dialect == Dialect.Sqlite) {
-    const is_exsit = await exists(url);
-    if (is_exsit) {
-      // 检查系统表是否存在
-      return c.json({ ok: true });
+import { os } from "@orpc/server";
+import { OutPut } from "./types.ts";
+export const change_env = os.input(z.object({ env: z.any() })).output(OutPut)
+  .handler(async ({ input }) => {
+    const { env } = input;
+    if (typeof env == "object") {
+      await write_env(env);
+      await reset_env(env);
+    }
+    return { ok: true };
+  });
+
+export const test_db = os
+  .route({ description: "测试连接数据库" })
+  .input(
+    z.object({ url: z.string(), dialect: z.string() }),
+  )
+  .output(OutPut)
+  .handler(async ({ input }) => {
+    const { url, dialect } = input;
+    if (dialect == Dialect.Sqlite) {
+      const is_exsit = await exists(url);
+      if (is_exsit) {
+        // 检查系统表是否存在
+        return { ok: true };
+      } else {
+        return {
+          ok: true,
+          msg: "数据库不存在,是否创建",
+          data: { exsit: false },
+        };
+      }
     } else {
-      return c.json({
-        ok: true,
-        msg: "数据库不存在,是否创建",
-        data: { exsit: false },
-      });
+      const is_connect_success = await testConnection(url);
+      if (!is_connect_success) {
+        return { ok: false, msg: "连接失败", data: { exists: false } };
+      } else {
+        return { ok: true, msg: "连接成功" };
+      }
     }
-  } else {
-    const is_connect_success = await testConnection(url);
-    if (!is_connect_success) {
-      return c.json({ ok: false, msg: "连接失败", data: { exists: false } });
-    } else {
-      return c.json({ ok: true, msg: "连接成功" });
+  });
+
+export const create_db = os
+  .input(z.object({ url: z.string(), dialect: z.string() }))
+  .output(OutPut)
+  .handler(async ({ input }) => {
+    const { url, dialect } = input;
+    if (dialect == Dialect.Sqlite) {
+      try {
+        const db = new DatabaseSync(url);
+        const sqlite_dialect = new SqliteDialect({
+          database: new SQLite(url),
+        });
+        const kysely_db = new Kysely<IDatabase>({ dialect: sqlite_dialect });
+
+        await seed.createSysDbTable(kysely_db);
+        await seed.createSysPluginTable(kysely_db);
+        await seed.createSysTenantTable(kysely_db);
+        await kysely_db.insertInto("sys-db").values({
+          status: SysDbStatus.active,
+          create_at: new Date().getTime(),
+          url,
+          dialect,
+        }).execute();
+
+        await db_manager.addDb({ db: kysely_db, dialect: Dialect.Sqlite });
+        db_manager.default_db = { db: kysely_db, dialect: Dialect.Sqlite };
+      } catch (e) {
+        return { ok: false, msg: e.message };
+      }
+      // await db.close()
     }
-  }
-}
 
-export async function create_db(c: Context<BlankEnv>) {
-  const { url, dialect } = await c.req.json();
-  if (dialect == Dialect.Sqlite) {
-    try {
-      const db = new DatabaseSync(url);
-      const sqlite_dialect = new SqliteDialect({
-        database: new SQLite(url),
-      });
-      const kysely_db = new Kysely<IDatabase>({ dialect: sqlite_dialect });
-
-      await seed.createSysDbTable(kysely_db);
-      await seed.createSysPluginTable(kysely_db);
-      await seed.createSysTenantTable(kysely_db);
-      await kysely_db.insertInto("sys-db").values({
-        status: SysDbStatus.active,
-        create_at: new Date().getTime(),
-        url,
-        dialect,
-      }).execute();
-
-      await db_manager.addDb({ db: kysely_db, dialect: Dialect.Sqlite });
-      db_manager.default_db = { db: kysely_db, dialect: Dialect.Sqlite };
-    } catch (e) {
-      return c.json({ ok: false, msg: e.message });
-    }
-    // await db.close()
-  }
-
-  return c.json({ ok: true, msg: "创建成功" });
-}
+    return { ok: true, msg: "创建成功" };
+  });
 
 async function testConnection(url: string) {
   let connection;
@@ -99,42 +106,7 @@ async function testConnection(url: string) {
   }
 }
 
-async function current_status(c: Context) {
+export const current_status = os.output(OutPut).handler(async ({ input }) => {
   const { ok } = await load_env();
-  return c.json({ ok });
-}
-
-async function install_admin_module(c: Context) {
-  const { url } = await c.req.json();
-
-  await db_manager.default_db.db.insertInto("sys-plugin").values({
-    name: "引导模块",
-    url: "./plugin.ts",
-    create_at: Date.now(),
-    status: SysPluginStatus.active,
-    default_pathname:'/plugins/base'
-  }).execute();
-  const install_module_result = await modManager.install_module({
-    url: url,
-    name: "默认管理系统",
-    "description": "描述",
-  });
-  if (install_module_result.ok) {
-    await modManager.reset_default_module(url);
-    await db_manager.default_db.db.insertInto("sys-plugin").values({
-      name: "默认管理系统",
-      url: url,
-      create_at: Date.now(),
-      status: SysPluginStatus.active,
-      pathname:'/admin',
-      default_pathname:'/plugins/admin'
-    }).execute();
-    return c.json({ ok: true });
-  }
-  return c.json({ ok: false, msg: install_module_result.msg });
-}
-
-export const sys_api = {
-  GET: { current_status },
-  post: { install_admin_module },
-};
+  return { ok };
+});

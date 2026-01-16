@@ -5,7 +5,7 @@
     "workspace": [
         "./server",
         "./libs/shadcn",
-        "./libs/shadcn-pro",
+        
         "./plugins/admin",
         "./libs/build"
 

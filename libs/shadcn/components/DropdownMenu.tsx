@@ -1,6 +1,6 @@
 import { button } from "./Button.tsx";
 
-import { cn } from "./utils/cn.tsx";
+import { cn } from "../utils/cn.tsx";
 
 import { Icons } from "./Icons.tsx";
 import { ComponentChildren, createContext, JSX } from "preact";

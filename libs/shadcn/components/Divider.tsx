@@ -1,5 +1,5 @@
 import type { JSX } from "preact";
-import { cn } from "./utils/cn.tsx";
+import { cn } from "../utils/cn.tsx";
 
 export function Divider(
   { vertical, class: className, ...props }:

@@ -1,8 +1,8 @@
 import { Icons } from "./Icons.tsx";
 
 import { Button } from "./Button.tsx";
-import { ComponentChildren } from "preact";
-import { Signal, useSignal, useSignalEffect } from "@preact/signals";
+import type { ComponentChildren } from "preact";
+import { type Signal, useSignal, useSignalEffect } from "@preact/signals";
 
 export type ICol<T> = {
   label: string;

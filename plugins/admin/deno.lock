@@ -58,6 +58,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@24wings/build@0.0.7",
       "jsr:@std/fs@^1.0.21",
       "jsr:@std/path@^1.1.4",
       "npm:@preact/signals@^2.5.1",

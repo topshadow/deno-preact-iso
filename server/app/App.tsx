@@ -13,15 +13,18 @@ const getInitialData = () => {
 
 const App = () => {
   const initialData = getInitialData();
-
+  let prefix = "";
+  if (typeof window != "undefined") {
+    prefix = window.module_path || "";
+  }
   return (
     <LocationProvider>
       <ErrorBoundary>
         <Router>
           {routes.map(({ path, Component }) => (
             <Route
-              key={path}
-              path={path}
+              key={prefix + path}
+              path={prefix + path}
               component={() => <Component {...initialData} />}
             />
           ))}

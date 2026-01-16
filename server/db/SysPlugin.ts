@@ -20,4 +20,5 @@ export interface SysPluginTable {
   tenant_id?:number;
 }
 
-export type SysPlugin = Selectable<SysPluginTable>;
+export type SysPlugin = Selectable<SysPluginTable>
+export type SysPluginWithModule=SysPlugin&{mod?:any};

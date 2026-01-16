@@ -1,6 +1,6 @@
 import type { ComponentChildren, JSX } from "preact";
-import { cn } from "./utils/cn.tsx";
-import { Signal } from "@preact/signals";
+import { cn } from "../utils/cn.tsx";
+import type { Signal } from "@preact/signals";
 // import { SampleDash } from "../SampleDash.tsx";
 
 export function SidebarContent(

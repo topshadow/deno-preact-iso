@@ -1,6 +1,5 @@
-import { Icons } from "./Icons.tsx";
-import { cn } from "./utils/cn.tsx";
-import { ComponentChild, ComponentChildren, createContext, JSX } from "preact";
+import { cn } from "../utils/cn.tsx";
+import { type ComponentChild, type ComponentChildren, createContext, type JSX } from "preact";
 import { useContext } from "preact/hooks";
 
 export const DialogContext = createContext<Omit<DialogProps, "children">>({

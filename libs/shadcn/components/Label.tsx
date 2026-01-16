@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "./utils/cn.tsx";
+import { cn } from "../utils/cn.tsx";
 import type { JSX } from "preact";
 
 const labelVariants = cva(

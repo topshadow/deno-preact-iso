@@ -45,6 +45,8 @@ export class ModuleManager {
     if (result.ok && new_mod) {
       mod.mod = new_mod;
       this.module_list.push(mod);
+    } else {
+      console.error("install module error:", result, new_mod);
     }
 
     return result;
@@ -80,27 +82,45 @@ export class ModuleManager {
   async handle_request(c: Context<BlankEnv>) {
     const pathname = new URL(c.req.url).pathname;
     // 转发插件
-    let handle_mod = this.module_list.find((m) => {
-      let r;
-      // 有限匹配 模块路径
-      if (m.pathname) {
-        r = pathname.includes(m.pathname);
-      }
-      if (!r) {
-        r = pathname.includes(m.default_pathname);
-      }
-      return r;
-    });
+    let handle_mod: Module | undefined = undefined;
     if (pathname == "/") {
       handle_mod = this.default_module;
-    } else {
-      handle_mod = handle_mod || this.default_module;
+    } // default_pathname 查找
+    else if (pathname.startsWith("/plugins")) {
+      console.log("plugins 查找");
+
+      handle_mod = this.module_list
+        .filter((m) => m.default_pathname)
+        .filter((m) => pathname.includes(m.default_pathname))
+        .sort((a, b) =>
+          a.default_pathname?.length - b.default_pathname?.length
+        )[0];
+    } // pathname 查找
+    else {
+      //
+      console.log("pathname 查找");
+      handle_mod = this.module_list
+        .filter((m) => m.pathname)
+        .filter((m) => pathname.includes(m.pathname))
+        .sort((a, b) => b.pathname?.length - a.pathname?.length)[0];
+        console.log(handle_mod)
     }
+    // module_path 计算方式
 
     // console.log(pathname, handle_mod, this.module_list);
     if (handle_mod) {
       if (handle_mod.mod) {
-        const module_path = handle_mod.pathname || handle_mod.default_pathname;
+        let module_path = "";
+        console.log(handle_mod.url);
+
+        if (pathname == "/") module_path = "/";
+        else {
+          module_path = pathname.includes("/plugins")
+            ? handle_mod.default_pathname
+            : handle_mod.pathname;
+        }
+
+        // const module_path = handle_mod.pathname || handle_mod.default_pathname;
         console.log(
           "ok dispatch request",
           c.req.url,
@@ -110,7 +130,7 @@ export class ModuleManager {
 
         const url = new URL(c.req.url);
         url.pathname = url.pathname.replace(module_path, "");
-        console.log("修改后的url", url);
+        console.log("修改后的url", url.href);
 
         return await handle_mod.mod.request(
           url.href,

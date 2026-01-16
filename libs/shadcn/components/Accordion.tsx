@@ -1,7 +1,7 @@
 import { useContext } from "preact/hooks";
 import { type ComponentChildren, createContext } from "preact";
 import { Signal } from "@preact/signals";
-import { cn } from "./utils/cn.tsx";
+import { cn } from "../utils/cn.tsx";
 import { Button, button } from "./Button.tsx";
 export type AccordionProps = { value: Signal<string> };
 

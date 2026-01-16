@@ -1,4 +1,4 @@
-import { resolve } from "@std/path";
+import { resolve ,fromFileUrl} from "@std/path";
 async function compile(
   input_path: string,
   config: any,
@@ -20,23 +20,14 @@ async function compile(
 
   const dir = await Deno.makeTempDir();
   const config_file_path = opt?.config_path ?? resolve(dir, "deno.json");
+  
 
   Deno.writeTextFileSync(config_file_path, JSON.stringify(config));
-  // console.log(config_file_path);
-  // let external=[     "--packages",
-  //     "external",
-  //     "--external",
-  //     "preact-iso",
-  //     "--external",
-  //     "preact",]
+
 
   const cwd = opt?.cwd || Deno.cwd();
-  // console.log(
-  //   "compile cwd:",
-  //   cwd,
-  //   "compile config_file_path:",
-  //   config_file_path,
-  // );
+  // console.log('compile js cwd:',cwd)
+
   const cmd = new Deno.Command("deno", {
     cwd: cwd,
     args: [
@@ -90,9 +81,9 @@ export async function compile_js(
   } else {
     const endpoint = resolve("./app/client.tsx");
     const cwd = new URL(".", url.replace("plugin.ts", ""));
-    // const config_path = new URL("./client.tsx", url.replaceAll("plugin.ts", ""))
+    const config_path = new URL("./client.json", url.replaceAll("plugin.ts", ""))
     //   .href.replace("file:///", "");
 
-    return await compile(endpoint, config, { cwd });
+    return await compile(endpoint, config, { cwd ,config_path:fromFileUrl(config_path),sourcemap:true});
   }
 }

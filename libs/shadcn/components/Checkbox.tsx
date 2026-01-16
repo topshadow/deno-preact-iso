@@ -1,7 +1,5 @@
-"use client";
-
-import { JSX } from "preact/jsx-runtime";
-import { cn } from "./utils/cn.tsx";
+import type { JSX } from "preact/jsx-runtime";
+import { cn } from "../utils/cn.tsx";
 const Checkbox = (
   { class: className, name, checked, ...props }: {
     class?: string;

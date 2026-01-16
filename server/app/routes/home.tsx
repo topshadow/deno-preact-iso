@@ -1,9 +1,11 @@
 import { useEffect } from "preact/hooks";
 import { Button, cn, IFilter, Input, Table } from "@24wings/shadcn";
 import { useSignal } from "@preact/signals";
-import { api } from "../api/mod.ts";
 import { Dialect } from "../types/Dialect.ts";
-// import { drizzle } from "drizzle-orm/d1";
+
+import { orpc_client } from "@24wings/server/orpc-client";
+//  import { orpc_client } from "@24wings/server/orpc-client";
+
 // import { counter } from "../../db/schema";
 // import type { CloudflareBindings } from "../../server";
 // import type { ApiType } from "../../api";
@@ -35,10 +37,12 @@ export const Component = ({ count: initialCount }: LoaderData) => {
     total: 2,
   });
   const refresh_status = () =>
-    api.current_status().then((r) => is_success.value = r.ok);
+    orpc_client.env.current_status().then((r) => is_success.value = r.ok);
 
   useEffect(() => {
     console.log("is server running");
+
+    // alert('1')
     refresh_status();
   }, []);
 
@@ -55,17 +59,28 @@ export const Component = ({ count: initialCount }: LoaderData) => {
             </div>
             <div>
               <select
-              defaultValue={dialect.value}
+                defaultValue={dialect.value}
                 value={dialect.value}
                 onChange={(e) => {
-                  console.log(e)
+                  console.log(e);
                   dialect.value = e.target.value;
                   valid.value = false;
                 }}
- 
               >
-                <option onSelect={()=>dialect.value=Dialect.Mysql} value={Dialect.Mysql} selected={dialect.value==Dialect.Mysql} >Mysql</option>
-                <option onSelect={()=>dialect.value=Dialect.Sqlite} value={Dialect.Sqlite} selected={dialect.value==Dialect.Sqlite}>Sqlite</option>
+                <option
+                  onSelect={() => dialect.value = Dialect.Mysql}
+                  value={Dialect.Mysql}
+                  selected={dialect.value == Dialect.Mysql}
+                >
+                  Mysql
+                </option>
+                <option
+                  onSelect={() => dialect.value = Dialect.Sqlite}
+                  value={Dialect.Sqlite}
+                  selected={dialect.value == Dialect.Sqlite}
+                >
+                  Sqlite
+                </option>
               </select>
             </div>
           </div>
@@ -77,7 +92,7 @@ export const Component = ({ count: initialCount }: LoaderData) => {
               <div>
                 <Button
                   onClick={() =>
-                    api.create_db({
+                    orpc_client.env.create_db({
                       url: database_url.value,
                       dialect: Dialect.Sqlite,
                     }).then((r) => {
@@ -92,7 +107,7 @@ export const Component = ({ count: initialCount }: LoaderData) => {
             <div class="text-right">
               <Button
                 onClick={() =>
-                  api.test_db({
+                  orpc_client.env.test_db({
                     url: database_url.value,
                     dialect: dialect.value,
                   })
@@ -116,9 +131,11 @@ export const Component = ({ count: initialCount }: LoaderData) => {
               </Button>
               <Button
                 onClick={() =>
-                  api.change_env({
-                    DATABASE_URL: database_url.value,
-                    DIALECT: dialect.value,
+                  orpc_client.env.change_env({
+                    env: {
+                      DATABASE_URL: database_url.value,
+                      DIALECT: dialect.value,
+                    },
                   }).then((r) => {
                     if (r.ok) {
                       refresh_status();
@@ -152,9 +169,10 @@ export const Component = ({ count: initialCount }: LoaderData) => {
                   <Button
                     size="sm"
                     onClick={() =>
-                      api.install_admin_module({ url: r.url }).then((r) => {
-                        if (r.ok) location.reload();
-                      })}
+                      orpc_client.plugin.install_admin_module({ url: r.url })
+                        .then((r) => {
+                          if (r.ok) location.reload();
+                        })}
                   >
                     安装
                   </Button>

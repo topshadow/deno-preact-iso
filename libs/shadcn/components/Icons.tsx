@@ -1,5 +1,5 @@
-import { JSX } from "preact";
-import { cn } from "./utils/cn.tsx";
+import type { JSX } from "preact";
+import { cn } from "../utils/cn.tsx";
 
 export type IconProps = JSX.IntrinsicElements["svg"];
 function IconBlibli({ ...props }) {

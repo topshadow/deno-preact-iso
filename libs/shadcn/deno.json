@@ -9,7 +9,10 @@
     },
     "version": "0.0.2",
     "license": "MIT",
-    "exports": "./mod.tsx",
+    "exports": {
+        ".": "./mod.tsx",
+        "./pro": "./pro.ts"
+    },
     "imports": {
         "preact": "npm:preact@^10.26.6",
         "tailwind-merge": "npm:tailwind-merge@^3.4.0",
