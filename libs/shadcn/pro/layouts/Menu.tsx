@@ -1,7 +1,14 @@
-export type MenuItem = {
+import * as z from "zod";
+export type IMenuItem = {
   title: string;
-  // deno-lint-ignore no-explicit-any
-  icon?: any;
-  path?: string;
-  children?: MenuItem[];
+  
+  icon?: any|null;
+  path?: string|null;
+  children?: IMenuItem[];
 };
+export const MenuItem = z.object({
+  title: z.string(),
+  icon: z.any().nullable().optional(),
+  path: z.string().nullable().optional(),
+  children:z.array(z.any())
+}) satisfies z.ZodType<IMenuItem>;

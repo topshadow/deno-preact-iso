@@ -8,7 +8,10 @@ export * from "./components/DropdownMenu.tsx";
 export * from "./components/Input.tsx";
 export * from "./components/Divider.tsx";
 export * from "./components/Table.tsx";
-// export * from './Select.tsx'
+export * from "./components/Label.tsx";
+export * from "./components/Dialog.tsx";
+export * from "./components/Select.tsx";
+
 const platform: { is_browser: Readonly<boolean> } = {
   get is_browser() {
     return typeof window == "object";

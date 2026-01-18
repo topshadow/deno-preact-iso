@@ -1,53 +1,12 @@
 import { AppNavbar } from "./AppNavbar.tsx";
 import { AppBreadmun } from "./AppBreadmun.tsx";
 import { Icons, platform, Sidebar } from "@24wings/shadcn";
-import type { MenuItem } from "./Menu.tsx";
+import type { IMenuItem } from "./Menu.tsx";
 
 import type { ComponentChildren, JSX } from "preact";
 
 import { type Signal, useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
-
-export const default_menus: MenuItem[] = [{
-  title: "供应商",
-  children: [{
-    title: "供应商货品导入",
-    path: "/routes/home/index",
-    icon: <Icons.Box className="mr-2" />,
-  }],
-}, {
-  title: "示例",
-  children: [
-    {
-      title: "accroding",
-      path: "/demos/accroding",
-    },
-    {
-      title: "sidebar",
-      path: "/demos/sidebar",
-    },
-    {
-      title: "tables",
-      path: "/demos/table",
-    },
-    {
-      title: "dropdown-menu",
-      path: "/demos/dropdown-menu",
-    },
-    {
-      title: "dialog",
-      path: "/demos/dialog",
-    },
-    {
-      title: "tabs",
-      path: "/demos/tabs",
-    },
-    {
-      title: "进度条",
-      path: "/demos/process-bar",
-    },
-  ],
-}];
 
 export const default_config = {
   title: "智联数据管理",
@@ -55,7 +14,7 @@ export const default_config = {
 
 export function AppSidebar(
   { menus, children, title, ...props }: {
-    menus?: Signal<MenuItem[]>;
+    menus: Signal<IMenuItem[]>;
     title?: string;
 
     open?: boolean;
@@ -67,7 +26,7 @@ export function AppSidebar(
   if (platform.is_browser) {
     path.value = new URL(location.href).pathname;
   }
-  // menus = menus || default_menus;
+
   const actvie_menu = menus?.value.find((m) =>
     m.children?.find((sub) => path.value.includes(sub.path as string))
   );
@@ -98,9 +57,10 @@ export function AppSidebar(
 function LeftPanel(
   { menus, title }:
     & ComponentChildren
-    & { menus?: Signal<MenuItem[]>; path: string; title?: string },
+    & { menus?: Signal<IMenuItem[]>; path: string; title?: string },
 ) {
   const path = useSignal("/");
+
   useEffect(() => {
     path.value = location.pathname;
   }, []);
@@ -140,6 +100,7 @@ function LeftPanel(
               </h3>
               {m.children?.map((sub) => (
                 <a
+                onClick={()=>path.value=sub.path}
                   href={sub.path}
                   class={"flex items-center px-4 py-2 text-foreground   rounded-md " +
                     (path.value == sub.path

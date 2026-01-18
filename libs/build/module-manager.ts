@@ -82,7 +82,8 @@ export class ModuleManager {
     const pathname = new URL(c.req.url).pathname;
     // 转发插件
     let handle_mod: Module | undefined = undefined;
-    if (pathname == "/") {
+    if (pathname == "/"||!pathname) {
+      console.log("交给默认模块处理");
       handle_mod = this.default_module;
     } // default_pathname 查找
     else if (pathname.startsWith("/plugins")) {
@@ -97,16 +98,17 @@ export class ModuleManager {
     } // pathname 查找
     else {
       //
-      console.log("pathname 查找");
+      // console.log("pathname 查找");
       handle_mod = this.module_list
         .filter((m) => m.pathname)
         .filter((m) => pathname.includes(m.pathname))
         .sort((a, b) => b.pathname?.length - a.pathname?.length)[0];
-        console.log(handle_mod)
+      // console.log(handle_mod)
     }
     // module_path 计算方式
 
     // console.log(pathname, handle_mod, this.module_list);
+    if(!handle_mod) handle_mod=this.default_module;
     if (handle_mod) {
       if (handle_mod.mod) {
         let module_path = "";
@@ -134,9 +136,12 @@ export class ModuleManager {
         return await handle_mod.mod.request(
           url.href,
           c.req.raw,
-          {module_path,db_manager:c.get('db_manager')},
+          { module_path, db_manager: c.get("db_manager") },
         );
       }
+    } else {
+      //
+      console.log("没有找到对应的模块");
     }
     return c.notFound();
   }

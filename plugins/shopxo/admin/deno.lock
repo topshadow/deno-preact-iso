@@ -1,0 +1,47 @@
+{
+  "version": "5",
+  "specifiers": {
+    "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
+    "npm:preact@^10.28.2": "10.28.2"
+  },
+  "npm": {
+    "preact-iso@2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2": {
+      "integrity": "sha512-rLy0RmzP/hrDjnFdnEblxFgKtzUj4njkHrpGJBGS7S4QuYw1zv0lA38qsWpeAAB10JAz/hF2CsHrLen9ufCtbw==",
+      "dependencies": [
+        "preact",
+        "preact-render-to-string"
+      ],
+      "tarball": "https://registry.npmmirror.com/preact-iso/-/preact-iso-2.11.1.tgz"
+    },
+    "preact-render-to-string@6.6.5_preact@10.28.2": {
+      "integrity": "sha512-O6MHzYNIKYaiSX3bOw0gGZfEbOmlIDtDfWwN1JJdc/T3ihzRT6tGGSEWE088dWrEDGa1u7101q+6fzQnO9XCPA==",
+      "dependencies": [
+        "preact"
+      ],
+      "tarball": "https://registry.npmmirror.com/preact-render-to-string/-/preact-render-to-string-6.6.5.tgz"
+    },
+    "preact@10.28.2": {
+      "integrity": "sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA==",
+      "tarball": "https://registry.npmmirror.com/preact/-/preact-10.28.2.tgz"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@24wings/build@^0.0.1",
+      "jsr:@std/fs@^1.0.21",
+      "jsr:@std/path@^1.1.4",
+      "npm:@orpc/client@^1.13.4",
+      "npm:@orpc/openapi@^1.13.4",
+      "npm:@orpc/server@^1.13.4",
+      "npm:@orpc/zod@^1.13.4",
+      "npm:@preact/signals@^2.5.1",
+      "npm:class-variance-authority@~0.7.1",
+      "npm:clsx@^2.1.1",
+      "npm:hono@^4.11.4",
+      "npm:preact-iso@^2.11.1",
+      "npm:preact@^10.28.2",
+      "npm:tailwind-merge@^3.4.0",
+      "npm:zod@^4.3.5"
+    ]
+  }
+}

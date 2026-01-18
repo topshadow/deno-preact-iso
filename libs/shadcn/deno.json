@@ -2,12 +2,18 @@
     "name": "@24wings/shadcn",
     "compilerOptions": {
         "jsx": "precompile",
-        "jsxImportSource": "preact"
+        "jsxImportSource": "preact",
+        "lib": [
+            "deno.unstable",
+            "node",
+            "dom.iterable",
+            "dom"
+        ]
     },
     "tasks": {
         "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
     },
-    "version": "0.0.2",
+    "version": "0.0.4",
     "license": "MIT",
     "exports": {
         ".": "./mod.tsx",
@@ -15,9 +21,11 @@
     },
     "imports": {
         "preact": "npm:preact@^10.26.6",
+        "preact-iso": "npm:preact-iso@^2.11.1",
         "tailwind-merge": "npm:tailwind-merge@^3.4.0",
         "class-variance-authority": "npm:class-variance-authority@^0.7.1",
         "clsx": "npm:clsx@^2.1.1",
-        "@preact/signals": "npm:@preact/signals@^2.2.1"
+        "@preact/signals": "npm:@preact/signals@^2.2.1",
+        "zod": "npm:zod@^4.3.5"
     }
 }

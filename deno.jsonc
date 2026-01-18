@@ -5,10 +5,8 @@
     "workspace": [
         "./server",
         "./libs/shadcn",
+        "./libs/build",
+        "./plugins/shopxo/admin"
         
-        "./plugins/admin",
-        "./libs/build"
-
-
     ]
-}
+} 

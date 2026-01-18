@@ -1,0 +1,41 @@
+## 重构Dialog组件
+
+### 目标
+重构Dialog组件的`showConfirm`和`showPrompt`函数，添加额外参数，包括：
+1. 成功回调和失败回调
+2. alertDialog的关闭延时（默认3000ms）
+3. alertDialog的显示位置
+
+### 实现步骤
+
+#### 1. 更新类型定义
+- 修改`AlertDialogConfig`类型，添加`duration`和`position`属性
+- 修改`showAlert`、`showConfirm`和`showPrompt`函数的类型定义，添加回调参数
+
+#### 2. 重构showAlert函数
+- 添加`duration`参数，默认3000ms
+- 添加`position`参数，支持不同显示位置
+- 移除硬编码的1秒延时，使用传入的`duration`
+
+#### 3. 重构showConfirm函数
+- 添加`onSuccess`和`onError`回调参数
+- 在Promise resolve后调用相应的回调
+
+#### 4. 重构showPrompt函数
+- 添加`onSuccess`和`onError`回调参数
+- 在Promise resolve后调用相应的回调
+
+#### 5. 更新useDialog hook
+- 确保新参数能正确传递
+
+#### 6. 更新DialogRenderer组件
+- 支持不同的显示位置
+- 使用动态的关闭延时
+
+### 预期效果
+- 调用`alert`时可指定关闭延时和显示位置
+- 调用`confirm`和`prompt`时可添加成功和失败回调
+- 保持向后兼容，原有代码无需修改
+
+### 文件修改
+- `libs/shadcn/components/Dialog.tsx`：主要重构文件

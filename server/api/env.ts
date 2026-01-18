@@ -29,7 +29,11 @@ export const test_db = os
   .input(
     z.object({ url: z.string(), dialect: z.string() }),
   )
-  .output(OutPut)
+  .output(OutPut.extend({
+    data: z.object({
+      exists: z.boolean().optional(),
+    }).optional(),
+  }))
   .handler(async ({ input }) => {
     const { url, dialect } = input;
     if (dialect == Dialect.Sqlite) {
@@ -76,6 +80,12 @@ export const create_db = os
           url,
           dialect,
         }).execute();
+
+        // 写入配置文件
+        await write_env({
+          DATABASE_URL: url,
+          DIALECT: dialect,
+        });
 
         await db_manager.addDb({ db: kysely_db, dialect: Dialect.Sqlite });
         db_manager.default_db = { db: kysely_db, dialect: Dialect.Sqlite };

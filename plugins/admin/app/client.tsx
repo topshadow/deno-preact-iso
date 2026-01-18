@@ -73,5 +73,5 @@ window.tailwind.config = {
   },
 };
 
-console.log("client.tsx loaded!");
+console.log("client.tsx loaded!", "module_path:", window.module_path);
 hydrate(<App />, document.getElementById("root")!);

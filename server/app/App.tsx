@@ -1,12 +1,14 @@
 import { ErrorBoundary, LocationProvider, Route, Router } from "preact-iso";
-import { routes } from "./routes.tsx";
+
+import Home from "./routes/home.tsx";
+import { DialogProvider } from "@24wings/shadcn";
 
 // クライアント側で初期データを取得
 const getInitialData = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const w = window as any;
-  if (typeof w !== "undefined" && w.__INITIAL_DATA__) {
-    return w.__INITIAL_DATA__;
+
+  if (typeof window !== "undefined" && window.__INITIAL_DATA__) {
+    return window.__INITIAL_DATA__;
   }
   return {};
 };
@@ -18,19 +20,13 @@ const App = () => {
     prefix = window.module_path || "";
   }
   return (
-    <LocationProvider>
-      <ErrorBoundary>
-        <Router>
-          {routes.map(({ path, Component }) => (
-            <Route
-              key={prefix + path}
-              path={prefix + path}
-              component={() => <Component {...initialData} />}
-            />
-          ))}
-        </Router>
-      </ErrorBoundary>
-    </LocationProvider>
+    <DialogProvider>
+      <LocationProvider>
+        <ErrorBoundary>
+          <Home></Home>
+        </ErrorBoundary>
+      </LocationProvider>
+    </DialogProvider>
   );
 };
 

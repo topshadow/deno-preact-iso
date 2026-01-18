@@ -12,6 +12,7 @@ import {
   ThemeContext,
   ThemeEnum,
 } from "@24wings/shadcn";
+import { useLocation, useRoute } from "preact-iso/router";
 
 function Circle({ class: className, ...props }: JSX.IntrinsicElements["div"]) {
   return (
@@ -38,7 +39,7 @@ export function ThemeItem(
 }
 export function AppNavbar({ navbar_open }: { navbar_open: Signal<boolean> }) {
   const { is_dark } = useContext(ThemeContext);
-  console.log(is_dark);
+
   return (
     <header class="h-16 border-b border-border flex items-center sticky  top-0 z-40 w-full">
       <div class="w-full px-4 flex items-center justify-between">
@@ -54,12 +55,13 @@ export function AppNavbar({ navbar_open }: { navbar_open: Signal<boolean> }) {
             <Icons.SquareSquare />
           </Button>
 
-          {/* <!-- 品牌/标题 --> */}
           <div class="flex items-center gap-2">
             <div class="bg-primary p-1 rounded text-primary-foreground">
               <i class="fas fa-cube"></i>
             </div>
-            <h1 class="text-lg font-semibold">管理控制台</h1>
+            <h1 class="text-lg font-semibold">
+              管理控制台
+            </h1>
           </div>
         </div>
 

@@ -6,7 +6,10 @@ import { load_env } from "./config.ts";
 import { modManager } from "./manager.ts";
 import { db_manager } from "./db/mod.tsx";
 import { parseArgs } from "@std/cli";
-import { SysPluginStatus, type SysPluginWithModule } from "@24wings/build/types";
+import {
+  SysPluginStatus,
+  type SysPluginWithModule,
+} from "@24wings/build/types";
 
 const args = parseArgs<{ m: string; d?: string; help?: boolean }>(Deno.args);
 if (args.help) {
@@ -33,7 +36,7 @@ if (args.m) {
   const import_mod = await import(args.m);
   builtin_module.mod = import_mod.default;
 }
-
+await set_buildin_default_module()
 const load_env_result = await load_env();
 // 有配置,连接数据库,并且加载对应数据库中的模块
 if (load_env_result.ok && !args.d) {
@@ -59,23 +62,22 @@ if (load_env_result.ok && !args.d) {
       const result = await modManager.install_module(p);
       if (!result.ok) console.error("loading error:", result.msg);
     }
-  } else {
-    set_buildin_default_module();
   }
-} else {
-  set_buildin_default_module();
-}
-function set_buildin_default_module() {
+  
+} 
+async function set_buildin_default_module() {
   modManager.default_module = {
     id: 0,
     ...builtin_module,
     default_pathname: "/plugins/base",
   };
-  console.log("设置内置模块", modManager.default_module);
+ await modManager.install_module(builtin_module);
+ await modManager.module_list.push(builtin_module)
+  console.log("设置内置模块 成功 /plugins/base 或者 / 访问");
 }
 app.all("*", (r) => modManager.handle_request(r));
 console.table(modManager.module_list.map((m) => {
   const { mod, ...print } = m;
   return print;
-}));
+})); 
 Deno.serve(app.fetch);

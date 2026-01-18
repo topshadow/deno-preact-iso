@@ -23,8 +23,9 @@ type SSROptions = {
 
 // ルートモジュールの型定義
 export type RouteModule<T = unknown> = {
-  loader?: (c: Context<{ Bindings: any }>) => Promise<T>|T;
+  loader?: (c: Context<{ Bindings: any }>) => Promise<T> | T;
   Component: (props: any) => JSX.Element;
+
   Head?: (c: Context<{ Bindings: any }>) => Promise<string>;
   path: string;
 };
@@ -74,11 +75,13 @@ export const ssr = (
 export const ssrWithLoader = <T,>(
   route: RouteModule<T>,
   Root: FunctionComponent<{ module_path: string }>,
+  App,
 ): MiddlewareHandler<{ Bindings: any }> => {
   // console.log("ssrWithLoader!");
   return async (c) => {
     // console.log("ssrWithLoader called!");
     const path = new URL(c.req.url).pathname;
+    console.log(`locationStub:`, path);
     locationStub(path);
 
     // 1. loader実行してデータ取得
@@ -91,9 +94,14 @@ export const ssrWithLoader = <T,>(
     }
 
     // 2. データをpropsとしてコンポーネントをレンダリング
-    const { html: content } = await prerender(
-      <route.Component {...data} />,
+    let { html: content } = await prerender(
+      // <route.Component {...data} />,
+      <App />,
     );
+    // console.log( `prerender app:`,content)
+
+    // if (parent) { let sub_render = await prerender(<parent.Component children={()=><route.Component {...data}/>} />); content=sub_render.html}
+
     let head = "";
     if (route.Head) {
       head = await route.Head(c);
@@ -101,7 +109,7 @@ export const ssrWithLoader = <T,>(
 
     // 3. index.htmlを取得
     // const res = await c.env.ASSETS.fetch(new URL("/index.html", c.req.url));
-    console.log("ssr_loader env", c.env);
+    // console.log("ssr_loader env", c.env);
     const { html: view } = await prerender(
       <Root module_path={c.env.module_path == "/" ? "" : c.env.module_path} />,
     );
@@ -127,11 +135,11 @@ export const ssrWithLoader = <T,>(
   };
 };
 
-export function ssrRoutes<T>(routes: RouteModule<T>[], app: Hono) {
+export function ssrRoutes<T>(routes: RouteModule<T>[], app: Hono, App: any) {
   routes.forEach((route) => {
     app.get(
       route.path,
-      ssrWithLoader(route, Root),
+      ssrWithLoader(route, Root, App),
     );
   });
 }

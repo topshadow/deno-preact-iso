@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "React.createElement",
+    "jsxFragmentFactory": "React.Fragment"
+  },
+  "tasks": {
+    "start": "deno run --watch -A server.tsx",
+    "build": "deno bundle client.tsx client.js"
+  },
+  "imports": {
+    "react": "npm:react@^19.2.3",
+    "react-dom": "npm:react-dom@^19.2.3",
+    "wouter": "npm:wouter@^3.9.0"
+  }
+}

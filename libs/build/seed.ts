@@ -37,7 +37,7 @@ async function createSysTenantTable(db: Kysely<IDatabase>) {
     .addColumn("status" satisfies keyof SysTenant, "text")
     .addColumn("name" satisfies keyof SysTenant, "text")
     .addColumn("url" satisfies keyof SysTenant, "text")
-    .addColumn("is_default" satisfies keyof SysTenant, "boolean")
+    .addColumn("is_default" satisfies keyof SysTenant, "integer")
     .addColumn("create_at" satisfies keyof SysTenant, "integer")
     // .addColumn(''  satisfies keyof SysPlugin ,'text')
     .execute();

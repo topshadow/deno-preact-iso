@@ -1,28 +1,14 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@24wings/shadcn@0.0.2": "0.0.2",
     "npm:@orpc/client@^1.13.4": "1.13.4",
-    "npm:@preact/signals@^2.2.1": "2.5.1_preact@10.28.2",
     "npm:@preact/signals@^2.5.1": "2.5.1_preact@10.28.2",
     "npm:class-variance-authority@~0.7.1": "0.7.1",
     "npm:clsx@^2.1.1": "2.1.1",
-    "npm:preact-iso@^2.11.0": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
-    "npm:preact@^10.26.6": "10.28.2",
+    "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact@^10.28.2": "10.28.2",
-    "npm:tailwind-merge@^3.4.0": "3.4.0"
-  },
-  "jsr": {
-    "@24wings/shadcn@0.0.2": {
-      "integrity": "b1c8a1a934d977f1e4f43b8681770701bafc9a2f4dd56e423954bd97e2bf1834",
-      "dependencies": [
-        "npm:@preact/signals@^2.2.1",
-        "npm:class-variance-authority",
-        "npm:clsx",
-        "npm:preact@^10.26.6",
-        "npm:tailwind-merge"
-      ]
-    }
+    "npm:tailwind-merge@^3.4.0": "3.4.0",
+    "npm:zod@^4.3.5": "4.3.5"
   },
   "npm": {
     "@orpc/client@1.13.4": {
@@ -126,12 +112,14 @@
         "tagged-tag"
       ],
       "tarball": "https://registry.npmmirror.com/type-fest/-/type-fest-5.4.1.tgz"
+    },
+    "zod@4.3.5": {
+      "integrity": "sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==",
+      "tarball": "https://registry.npmmirror.com/zod/-/zod-4.3.5.tgz"
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@24wings/build@0.0.7",
-      "jsr:@24wings/shadcn@0.0.2",
       "jsr:@std/assert@1",
       "jsr:@std/cli@^1.0.25",
       "jsr:@std/dotenv@~0.225.6",
@@ -148,7 +136,7 @@
       "npm:kysely@~0.28.9",
       "npm:libsql@~0.5.22",
       "npm:mysql2@^3.16.0",
-      "npm:preact-iso@^2.11.0",
+      "npm:preact-iso@^2.11.1",
       "npm:preact@^10.28.2",
       "npm:tailwind-merge@^3.4.0",
       "npm:zod@^4.3.5"

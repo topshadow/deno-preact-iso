@@ -1,8 +1,8 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@24wings/admin@0.1.0": "0.1.0",
-    "jsr:@24wings/build@0.0.2": "0.0.2",
+    "jsr:@24wings/admin@0.2.0": "0.2.0",
+    "jsr:@24wings/admin@0.2.1": "0.2.1",
     "jsr:@std/assert@1": "1.0.16",
     "jsr:@std/cli@^1.0.25": "1.0.25",
     "jsr:@std/dotenv@~0.225.6": "0.225.6",
@@ -22,7 +22,6 @@
     "npm:libsql@~0.5.22": "0.5.22",
     "npm:mysql2@^3.16.0": "3.16.1",
     "npm:mysql2@^3.16.1": "3.16.1",
-    "npm:preact-iso@^2.11.0": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
     "npm:preact-render-to-string@^6.6.5": "6.6.5_preact@10.28.2",
     "npm:preact@^10.26.6": "10.28.2",
@@ -31,19 +30,28 @@
     "npm:zod@^4.3.5": "4.3.5"
   },
   "jsr": {
-    "@24wings/admin@0.1.0": {
-      "integrity": "aea5e93d093d504603fa473675d91033d612a4ff9823ca9298dc1b1493c46960",
+    "@24wings/admin@0.2.0": {
+      "integrity": "db7379740e8be2d82f441df8e7c7f670f93ac1f81a380869c68cf20a0fed1fd1",
       "dependencies": [
-        "jsr:@24wings/build",
-        "npm:hono"
+        "npm:@orpc/client",
+        "npm:@orpc/server",
+        "npm:@preact/signals@^2.5.1",
+        "npm:hono",
+        "npm:preact-iso",
+        "npm:preact@^10.28.2",
+        "npm:zod"
       ]
     },
-    "@24wings/build@0.0.2": {
-      "integrity": "7dd73bb36bbc8b0536fc452a2d5fb96949a966eb39281d0fc356d88a6d42ae09",
+    "@24wings/admin@0.2.1": {
+      "integrity": "32e4d2b6803407b6d58e6ef92f73531ae4a025e9f2f739f8025cfbde2a97157d",
       "dependencies": [
-        "jsr:@std/path",
-        "npm:preact-iso@^2.11.1",
-        "npm:preact-render-to-string"
+        "npm:@orpc/client",
+        "npm:@orpc/server",
+        "npm:@preact/signals@^2.5.1",
+        "npm:hono",
+        "npm:preact-iso",
+        "npm:preact@^10.28.2",
+        "npm:zod"
       ]
     },
     "@std/assert@1.0.16": {
@@ -467,12 +475,12 @@
       "integrity": "sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==",
       "tarball": "https://registry.npmmirror.com/tailwind-merge/-/tailwind-merge-3.4.0.tgz"
     },
-    "type-fest@5.3.1": {
-      "integrity": "sha512-VCn+LMHbd4t6sF3wfU/+HKT63C9OoyrSIf4b+vtWHpt2U7/4InZG467YDNMFMR70DdHjAdpPWmw2lzRdg0Xqqg==",
+    "type-fest@5.4.1": {
+      "integrity": "sha512-xygQcmneDyzsEuKZrFbRMne5HDqMs++aFzefrJTgEIKjQ3rekM+RPfFCVq2Gp1VIDqddoYeppCj4Pcb+RZW0GQ==",
       "dependencies": [
         "tagged-tag"
       ],
-      "tarball": "https://registry.npmmirror.com/type-fest/-/type-fest-5.3.1.tgz"
+      "tarball": "https://registry.npmmirror.com/type-fest/-/type-fest-5.4.1.tgz"
     },
     "wildcard-match@5.1.4": {
       "integrity": "sha512-wldeCaczs8XXq7hj+5d/F38JE2r7EXgb6WQDM84RVwxy81T/sxB5e9+uZLK9Q9oNz1mlvjut+QtvgaOQFPVq/g==",
@@ -482,6 +490,31 @@
       "integrity": "sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==",
       "tarball": "https://registry.npmmirror.com/zod/-/zod-4.3.5.tgz"
     }
+  },
+  "redirects": {
+    "https://esm.sh/react@%3E=16.8.0?target=denonext": "https://esm.sh/react@19.2.3?target=denonext",
+    "https://esm.sh/react@18.2.0rea": "https://esm.sh/react@19.2.3",
+    "https://esm.sh/react@^19.2.0?target=denonext": "https://esm.sh/react@19.2.3?target=denonext",
+    "https://esm.sh/use-sync-external-store@^1.0.0/shim/index?target=denonext": "https://esm.sh/use-sync-external-store@1.6.0/shim/index?target=denonext"
+  },
+  "remote": {
+    "https://deno.land/std@0.185.0/_util/asserts.ts": "178dfc49a464aee693a7e285567b3d0b555dc805ff490505a8aae34f9cfb1462",
+    "https://deno.land/std@0.185.0/flags/mod.ts": "4d829c5bd1d657799cdeb487c6e418960efc6f4d8ce6cadc38a54b9ce266160a",
+    "https://esm.sh/react-dom@18.2.0/denonext/server.mjs": "8e60c3810ba398eae573a08bb0586fa6f026a039b22719c149426b8a898cd13f",
+    "https://esm.sh/react-dom@18.2.0/server": "feae466060f42aa4d40a2566212814a3d4a04f11b7f84d4504273d15b780001f",
+    "https://esm.sh/react@18.2.0": "fed8aeb7d240bb42a2167c9c7c6e842e128c7630cbcb08c4d61c9c1926f89c75",
+    "https://esm.sh/react@18.2.0/denonext/react.mjs": "a986c2876dc2f73879f395e677dc34cb751f260e69db16364810655f884df173",
+    "https://esm.sh/react@19.2.3": "622c0c887061c69d03591435705145bd4f6246ac0ab5a8bd272e6a727c1091ac",
+    "https://esm.sh/react@19.2.3/denonext/react.mjs": "8f4fd01715d7101297f85f0acef35b95bf85ace4f146b98705b408997ced226b",
+    "https://esm.sh/react@19.2.3?target=denonext": "622c0c887061c69d03591435705145bd4f6246ac0ab5a8bd272e6a727c1091ac",
+    "https://esm.sh/use-sync-external-store@1.6.0/denonext/shim/index.mjs": "25edc8fac441d2f7943bb28143cc5b3860fd4c87352322f6e45ada888908a730",
+    "https://esm.sh/use-sync-external-store@1.6.0/shim/index?target=denonext": "0bf4fa5efa41a5fac6753be77055a5bfdbde029e08896bcfa625c1aacc7238a7",
+    "https://esm.sh/wouter@2.12.1": "a98c68938585219ff2c4f7a1a8154b75e1ed3e47e1d43e0a676e4e527410feba",
+    "https://esm.sh/wouter@2.12.1/denonext/matcher.mjs": "efdaf34cba403202cc5d5be75c3692be893974490eefb9ae02e1aa4b69622c0c",
+    "https://esm.sh/wouter@2.12.1/denonext/paths.mjs": "bd69ba27f1175f035663fdc808aa18bd018dccc81df01b5b1906278be9b85c99",
+    "https://esm.sh/wouter@2.12.1/denonext/react-deps.mjs": "e4303d8f04ce55345c75c48332229dbd67016a0a5f4cce0b86f295800f67322b",
+    "https://esm.sh/wouter@2.12.1/denonext/use-location.mjs": "04e054c43624cd9547c7dfd17aaaf2d67c91286df1ae9f87e916c310055183d8",
+    "https://esm.sh/wouter@2.12.1/denonext/wouter.mjs": "1a9af9c86a95f33353fc338bde6727ba91fa9bb31b06196cc23671e12f77a2bb"
   },
   "workspace": {
     "members": {
@@ -509,13 +542,15 @@
           "npm:@preact/signals@^2.2.1",
           "npm:class-variance-authority@~0.7.1",
           "npm:clsx@^2.1.1",
+          "npm:preact-iso@^2.11.1",
           "npm:preact@^10.26.6",
-          "npm:tailwind-merge@^3.4.0"
+          "npm:tailwind-merge@^3.4.0",
+          "npm:zod@^4.3.5"
         ]
       },
-      "plugins/admin": {
+      "plugins/shopxo/admin": {
         "dependencies": [
-          "jsr:@24wings/build@0.0.7",
+          "jsr:@24wings/build@^0.0.1",
           "jsr:@std/fs@^1.0.21",
           "jsr:@std/path@^1.1.4",
           "npm:@orpc/client@^1.13.4",
@@ -526,7 +561,7 @@
           "npm:class-variance-authority@~0.7.1",
           "npm:clsx@^2.1.1",
           "npm:hono@^4.11.4",
-          "npm:preact-iso@^2.11.0",
+          "npm:preact-iso@^2.11.1",
           "npm:preact@^10.28.2",
           "npm:tailwind-merge@^3.4.0",
           "npm:zod@^4.3.5"
@@ -534,8 +569,6 @@
       },
       "server": {
         "dependencies": [
-          "jsr:@24wings/build@0.0.7",
-          "jsr:@24wings/shadcn@0.0.2",
           "jsr:@std/assert@1",
           "jsr:@std/cli@^1.0.25",
           "jsr:@std/dotenv@~0.225.6",
@@ -552,7 +585,7 @@
           "npm:kysely@~0.28.9",
           "npm:libsql@~0.5.22",
           "npm:mysql2@^3.16.0",
-          "npm:preact-iso@^2.11.0",
+          "npm:preact-iso@^2.11.1",
           "npm:preact@^10.28.2",
           "npm:tailwind-merge@^3.4.0",
           "npm:zod@^4.3.5"

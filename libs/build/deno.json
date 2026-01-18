@@ -5,7 +5,7 @@
     "./db-manager": "./db-manager.ts",
     "./types": "./types/mod.ts"
   },
-  "version": "0.0.7",
+  "version": "0.0.8",
   "license": "mit",
   "tasks": {
     "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
