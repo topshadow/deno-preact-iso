@@ -1,10 +1,10 @@
 import { Button, Dialog, Input, Label, Select } from "@24wings/shadcn";
-import { useSignal } from "@preact/signals";
+import { Signal, useSignal } from "@preact/signals";
 import type { SysPlugin } from "@24wings/build/types";
 import { SysPluginStatus } from "@24wings/build/types";
 
 interface PluginFormProps {
-  isOpen: boolean;
+  isOpen: Signal<boolean>;
   onClose: () => void;
   onSave: (data: Partial<SysPlugin>) => Promise<void>;
   initialData?: Partial<SysPlugin>;
@@ -18,8 +18,7 @@ export function PluginForm({
   initialData = {},
   loading = false,
 }: PluginFormProps) {
-  // 将boolean转换为Signal<boolean>以满足Dialog组件的要求
-  const isOpenSignal = useSignal(isOpen);
+  
   // 表单数据管理
   const formNameSignal = useSignal(initialData.name || "");
   const formUrlSignal = useSignal(initialData.url || "");
@@ -56,7 +55,7 @@ export function PluginForm({
 
   return (
     <Dialog
-      open={isOpenSignal}
+      open={isOpen}
       class="fixed inset-0 z-50 flex items-center justify-center"
     >
       <Dialog.Content>

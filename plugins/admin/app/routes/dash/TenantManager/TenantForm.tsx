@@ -4,7 +4,7 @@ import type { SysTenant } from "@24wings/build/types";
 import { SysTenantStatus, SysTenantStrategy } from "@24wings/build/types";
 
 interface TenantFormProps {
-  isOpen: boolean;
+  isOpen: Signal<boolean>;
   onClose: () => void;
   onSave: (data: Partial<SysTenant>) => Promise<void>;
   initialData?: Partial<SysTenant>;
@@ -52,37 +52,37 @@ export default function TenantForm({
   };
 
   return (
-    <Dialog open={isOpenSignal}>
-      <Dialog.Content className="sm:max-w-lg">
+    <Dialog open={isOpen}>
+      <Dialog.Content class="sm:max-w-lg">
         <Dialog.Header title={isEditing ? "编辑租户" : "新建租户"} />
-        <Dialog.Body>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
+            {isOpen.value&&<Dialog.Body>
+          <div class="grid gap-4 py-4">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" class="text-right">
                 租户名称
               </Label>
               <Input
                 id="name"
                 value={nameValue}
-                className="col-span-3"
+                class="col-span-3"
                 placeholder="请输入租户名称"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="url" className="text-right">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="url" class="text-right">
                 租户URL
               </Label>
               <Input
                 id="url"
                 value={urlValue}
-                className="col-span-3"
+                class="col-span-3"
                 placeholder="请输入租户URL"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="strategy" className="text-right">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="strategy" class="text-right">
                 策略
               </Label>
               <Select
@@ -93,12 +93,12 @@ export default function TenantForm({
                   { value: SysTenantStrategy.SubDomain, label: "子域名" },
                 ]}
                 placeholder="选择策略"
-                className="col-span-3"
+                class="col-span-3"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="status" className="text-right">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" class="text-right">
                 状态
               </Label>
               <Select
@@ -108,29 +108,30 @@ export default function TenantForm({
                   { value: SysTenantStatus.disabled, label: "禁用" },
                 ]}
                 placeholder="选择状态"
-                className="col-span-3"
+                class="col-span-3"
               />
             </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="is_default" className="text-right">
+            <div class="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="is_default" class="text-right">
                 默认租户
               </Label>
-              <div className="flex items-center gap-2 col-span-3">
+              <div class="flex items-center gap-2 col-span-3">
                 <input
                   type="checkbox"
                   id="is_default"
                   checked={isDefaultValue.value === 1}
                   onChange={(e) => (isDefaultValue.value = e.currentTarget.checked ? 1 : 0)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <Label htmlFor="is_default" className="cursor-pointer">
+                <Label htmlFor="is_default" class="cursor-pointer">
                   设为默认租户
                 </Label>
               </div>
             </div>
           </div>
-        </Dialog.Body>
+        </Dialog.Body>}
+   
         <Dialog.Footer>
           <Button
             variant="outline"

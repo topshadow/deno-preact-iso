@@ -1,14 +1,25 @@
 import { os } from "@orpc/server";
 import {
-  SysPlugin,
-  SysPluginStatus,
   type OContext,
   Output,
+  SysPlugin,
+  SysPluginStatus,
 } from "@24wings/build/types";
 
 import z from "zod";
 
-// 创建插件
+/**
+ * 创建插件
+ * @description 创建新的插件配置
+ * @param {Object} input - 插件创建参数
+ * @param {string} input.name - 插件名称，不能为空
+ * @param {string} input.url - 插件URL，不能为空
+ * @param {string} [input.pathname] - 插件访问路径
+ * @param {string} input.default_pathname - 插件默认路径，不能为空
+ * @param {SysPluginStatus} [input.status] - 插件状态，默认为active
+ * @param {number} [input.tenant_id] - 所属租户ID
+ * @returns {Promise<Output>} 返回创建结果，包含创建的插件ID
+ */
 export const create_plugin = os
   .$context<OContext>()
   .input(
@@ -18,12 +29,12 @@ export const create_plugin = os
 
       pathname: z.string().optional().nullable(),
       default_pathname: z.string().min(1, "默认路径不能为空"),
-      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled]).default(
-        SysPluginStatus.active,
-      ),
+      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled])
+        .default(
+          SysPluginStatus.active,
+        ),
       tenant_id: z.number().optional().nullable(),
-
-    }) ,
+    }),
   )
   .output(
     Output.extend({
@@ -41,7 +52,7 @@ export const create_plugin = os
         .values({
           name: input.name,
           url: input.url,
-          
+
           pathname: input.pathname ?? null,
           default_pathname: input.default_pathname,
           status: input.status,
@@ -60,12 +71,21 @@ export const create_plugin = os
     }
   });
 
-// 查询所有插件
+/**
+ * 查询所有插件
+ * @description 获取插件列表，支持按状态、域名和关键词筛选
+ * @param {Object} [input] - 查询参数
+ * @param {SysPluginStatus} [input.status] - 插件状态筛选
+ * @param {string} [input.domain] - 域名筛选
+ * @param {string} [input.keyword] - 关键词搜索，匹配插件名称或URL
+ * @returns {Promise<Output>} 返回插件列表
+ */
 export const list_plugin = os
   .$context<OContext>()
   .input(
     z.object({
-      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled]).optional(),
+      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled])
+        .optional(),
       domain: z.string().optional(),
       keyword: z.string().optional(),
     }).optional(),
@@ -85,7 +105,11 @@ export const list_plugin = os
         query = query.where("domain", "=", input.domain);
       }
       if (input?.keyword) {
-        query = query.where("name", "like", `%${input.keyword}%`).orWhere("url", "like", `%${input.keyword}%`);
+        query = query.where("name", "like", `%${input.keyword}%`).orWhere(
+          "url",
+          "like",
+          `%${input.keyword}%`,
+        );
       }
 
       const data = await query.execute();
@@ -96,7 +120,13 @@ export const list_plugin = os
     }
   });
 
-// 查询单个插件
+/**
+ * 查询单个插件
+ * @description 根据ID获取插件详情
+ * @param {Object} input - 查询参数
+ * @param {number} input.id - 插件ID
+ * @returns {Promise<Output>} 返回插件详情
+ */
 export const get_plugin = os
   .$context<OContext>()
   .input(z.object({ id: z.number() }))
@@ -123,7 +153,19 @@ export const get_plugin = os
     }
   });
 
-// 更新插件
+/**
+ * 更新插件
+ * @description 根据ID更新插件配置
+ * @param {Object} input - 更新参数
+ * @param {number} input.id - 插件ID
+ * @param {string} [input.name] - 插件名称
+ * @param {string} [input.url] - 插件URL
+ * @param {string} [input.domain] - 插件所属域名
+ * @param {string} [input.pathname] - 插件访问路径
+ * @param {string} [input.default_pathname] - 插件默认路径
+ * @param {SysPluginStatus} [input.status] - 插件状态
+ * @returns {Promise<Output>} 返回更新结果
+ */
 export const update_plugin = os
   .$context<OContext>()
   .input(
@@ -134,7 +176,8 @@ export const update_plugin = os
       domain: z.string().optional().nullable(),
       pathname: z.string().optional().nullable(),
       default_pathname: z.string().optional(),
-      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled]).optional(),
+      status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled])
+        .optional(),
     }),
   )
   .output(Output)
@@ -160,7 +203,9 @@ export const update_plugin = os
       if (input.status) updateData.status = input.status;
       if (input.domain !== undefined) updateData.domain = input.domain;
       if (input.pathname !== undefined) updateData.pathname = input.pathname;
-      if (input.default_pathname) updateData.default_pathname = input.default_pathname;
+      if (input.default_pathname) {
+        updateData.default_pathname = input.default_pathname;
+      }
 
       await db
         .updateTable("sys-plugin")
@@ -175,7 +220,13 @@ export const update_plugin = os
     }
   });
 
-// 删除插件
+/**
+ * 删除插件
+ * @description 根据ID删除插件
+ * @param {Object} input - 删除参数
+ * @param {number} input.id - 插件ID
+ * @returns {Promise<Output>} 返回删除结果
+ */
 export const delete_plugin = os
   .$context<OContext>()
   .input(z.object({ id: z.number() }))

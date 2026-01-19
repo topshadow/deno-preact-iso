@@ -1,33 +1,15 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@24wings/shadcn@0.0.4": "0.0.4",
-    "jsr:@24wings/shadcn@^0.0.4": "0.0.4",
     "npm:@orpc/client@^1.13.4": "1.13.4",
-    "npm:@preact/signals@^2.2.1": "2.5.1_preact@10.28.2",
     "npm:@preact/signals@^2.5.1": "2.5.1_preact@10.28.2",
     "npm:class-variance-authority@~0.7.1": "0.7.1",
     "npm:clsx@^2.1.1": "2.1.1",
+    "npm:hono@^4.11.4": "4.11.4",
     "npm:preact-iso@^2.11.1": "2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2",
-    "npm:preact@^10.26.6": "10.28.2",
     "npm:preact@^10.28.2": "10.28.2",
     "npm:tailwind-merge@^3.4.0": "3.4.0",
     "npm:zod@^4.3.5": "4.3.5"
-  },
-  "jsr": {
-    "@24wings/shadcn@0.0.4": {
-      "integrity": "6a2f9fc15970220c951e06f7fcf0e52d014d45ec0a96f4d201a880a3dd6003a8",
-      "dependencies": [
-        "jsr:@24wings/shadcn@^0.0.4",
-        "npm:@preact/signals@^2.2.1",
-        "npm:class-variance-authority",
-        "npm:clsx",
-        "npm:preact-iso",
-        "npm:preact@^10.26.6",
-        "npm:tailwind-merge",
-        "npm:zod"
-      ]
-    }
   },
   "npm": {
     "@orpc/client@1.13.4": {
@@ -94,6 +76,10 @@
       "integrity": "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==",
       "tarball": "https://registry.npmmirror.com/clsx/-/clsx-2.1.1.tgz"
     },
+    "hono@4.11.4": {
+      "integrity": "sha512-U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA==",
+      "tarball": "https://registry.npmmirror.com/hono/-/hono-4.11.4.tgz"
+    },
     "preact-iso@2.11.1_preact@10.28.2_preact-render-to-string@6.6.5__preact@10.28.2": {
       "integrity": "sha512-rLy0RmzP/hrDjnFdnEblxFgKtzUj4njkHrpGJBGS7S4QuYw1zv0lA38qsWpeAAB10JAz/hF2CsHrLen9ufCtbw==",
       "dependencies": [
@@ -139,7 +125,6 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@24wings/shadcn@0.0.4",
       "jsr:@std/fs@^1.0.21",
       "jsr:@std/path@^1.1.4",
       "npm:@orpc/client@^1.13.4",
@@ -150,6 +135,7 @@
       "npm:class-variance-authority@~0.7.1",
       "npm:clsx@^2.1.1",
       "npm:hono@^4.11.4",
+      "npm:jsonwebtoken@^9.0.3",
       "npm:preact-iso@^2.11.1",
       "npm:preact@^10.28.2",
       "npm:tailwind-merge@^3.4.0",

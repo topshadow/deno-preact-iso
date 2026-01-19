@@ -7,10 +7,10 @@ export const menus: IMenuItem[] = [
   {
     title: "开发者",
     children: [
-      { path: "/admin/datasource", title: "数据源" },
-      { path: "/admin/plugin-manager", title: "插件管理" },
-      { path: "/admin/tenant", title: "租户管理" },
-      { path: "/admin/tasker", title: "任务管理" },
+      { path: "/admin/dash/datasource", title: "数据源" },
+      { path: "/admin/dash/plugin-manager", title: "插件管理" },
+      { path: "/admin/dash/tenant", title: "租户管理" },
+      { path: "/admin/dash/tasker", title: "任务管理" }, 
     ],
   },
 ];

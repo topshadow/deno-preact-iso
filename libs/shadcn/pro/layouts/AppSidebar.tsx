@@ -102,6 +102,7 @@ function LeftPanel(
                 <a
                 onClick={()=>path.value=sub.path}
                   href={sub.path}
+                  target={sub.external? '_blank':''}
                   class={"flex items-center px-4 py-2 text-foreground   rounded-md " +
                     (path.value == sub.path
                       ? "bg-primary text-primary-foreground"
@@ -113,52 +114,7 @@ function LeftPanel(
                 </a>
               ))}
 
-              <div class="mt-6 space-y-1">
-                <h3 class="px-4 text-xs uppercase tracking-wider font-semibold text-muted-foreground">
-                  设置
-                </h3>
-                <a
-                  href="#"
-                  class="flex items-center px-4 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-                >
-                  <i class="fas fa-cog mr-3"></i>
-                  <span>系统设置</span>
-                </a>
-                <a
-                  href="#"
-                  class="flex items-center px-4 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-                >
-                  <i class="fas fa-user-cog mr-3"></i>
-                  <span>用户管理</span>
-                </a>
-                <a
-                  href="#"
-                  class="flex items-center px-4 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-                >
-                  <i class="fas fa-shield-alt mr-3"></i>
-                  <span>安全</span>
-                </a>
-              </div>
-
-              <div class="mt-6 space-y-1">
-                <h3 class="px-4 text-xs uppercase tracking-wider font-semibold text-muted-foreground">
-                  支持
-                </h3>
-                <a
-                  href="#"
-                  class="flex items-center px-4 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-                >
-                  <i class="fas fa-question-circle mr-3"></i>
-                  <span>帮助中心</span>
-                </a>
-                <a
-                  href="#"
-                  class="flex items-center px-4 py-2 text-foreground hover:bg-accent hover:text-accent-foreground rounded-md"
-                >
-                  <i class="fas fa-comments mr-3"></i>
-                  <span>意见反馈</span>
-                </a>
-              </div>
+        
             </div>
           </>
         ))}

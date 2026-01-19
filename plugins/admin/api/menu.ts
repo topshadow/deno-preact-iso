@@ -4,6 +4,11 @@ import { os } from "@orpc/server";
 import { MenuItem } from "@24wings/shadcn/pro";
 import { type OContext, Output } from "@24wings/build/types";
 import { menus } from "../app/data/menus.tsx";
+/**
+ * 加载菜单列表
+ * @description 获取系统菜单列表，包括基础菜单和插件菜单
+ * @returns {Promise<Output>} 返回菜单列表，包含菜单项的标题、图标、路径等信息
+ */
 export const loadMenus = os
   .$context<OContext>()
   .output(Output.extend({ data: z.array(MenuItem) }))
@@ -19,6 +24,7 @@ export const loadMenus = os
         title: p.name || p.url,
         icon: "",
         path: p.pathname || p.default_pathname,
+        external:true
       })),
     });
     return {ok:true,data};

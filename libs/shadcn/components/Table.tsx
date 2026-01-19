@@ -20,7 +20,10 @@ function TableHeader({ className, ...props }: JSX.IntrinsicElements["thead"]) {
   return (
     <thead
       data-slot="table-header"
-      className={cn(" [&_tr]:border-b [&_tr]:border-border ", className)}
+      className={cn(
+        "bg-muted [&_tr]:border-b [&_tr]:border-border ",
+        className,
+      )}
       {...props}
     />
   );

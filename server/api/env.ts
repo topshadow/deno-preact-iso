@@ -9,12 +9,15 @@ import * as z from "zod";
 import { db_manager } from "../db/mod.tsx";
 import { Kysely } from "kysely";
 
-import { seed } from "@24wings/build/db-manager";
+import { seed } from "../../libs/build/src/db/db-manager.ts";
 import { type IDatabase, SysDbStatus } from "@24wings/build/types";
 
 import { os } from "@orpc/server";
 import { OutPut } from "./types.ts";
-export const change_env = os.input(z.object({ env: z.any() })).output(OutPut)
+export const change_env = os
+  .route({ description: "更改环境变量配置" })
+  .input(z.object({ env: z.any() }))
+  .output(OutPut)
   .handler(async ({ input }) => {
     const { env } = input;
     if (typeof env == "object") {
@@ -59,6 +62,7 @@ export const test_db = os
   });
 
 export const create_db = os
+  .route({ description: "创建数据库并初始化系统表" })
   .input(z.object({ url: z.string(), dialect: z.string() }))
   .output(OutPut)
   .handler(async ({ input }) => {
@@ -117,7 +121,10 @@ async function testConnection(url: string) {
   }
 }
 
-export const current_status = os.output(OutPut).handler(async ({ input }) => {
-  const { ok } = await load_env();
-  return { ok };
-});
+export const current_status = os
+  .route({ description: "获取当前环境配置状态" })
+  .output(OutPut)
+  .handler(async ({ input }) => {
+    const { ok } = await load_env();
+    return { ok };
+  });

@@ -5,7 +5,7 @@ import { compile_js, setup_openapi, ssrRoutes } from "@24wings/build";
 import * as api from "./api/mod.ts";
 import App from "./app/App.tsx";
 const app = new Hono();
-
+// console.log(api)
 export const router = api;
 
 let js = await compile_js(import.meta, config);
@@ -17,11 +17,11 @@ if (Array.isArray(js)) {
 app.get("/client.js", (c) => {
   c.header("Content-Type", "text/javascript");
   return c.body(js);
-}); 
-
-ssrRoutes([{path:'/*',Component:App}], app, App);  
+});
 setup_openapi(app, api, {
   info: { title: "ShopXO管理后台", version: "0.1.1" },
 });
-export default app;
+ssrRoutes([{ path: "/*", Component: App }], app, App);
 
+export default app;
+ 

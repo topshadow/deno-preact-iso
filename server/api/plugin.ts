@@ -1,17 +1,14 @@
 import { os } from "@orpc/server";
 import * as z from "zod";
 import { db_manager } from "../db/mod.tsx";
-import { modManager } from "../manager.ts";
 import { OutPut } from "./types.ts";
-import { SysPluginStatus } from "@24wings/build/types";
-
-
-
+import { OContext, SysPluginStatus } from "@24wings/build/types";
 
 export const install_admin_module = os
+  .$context<OContext>()
   .input(z.object({ url: z.string() }))
   .output(OutPut)
-  .handler(async ({ input }) => {
+  .handler(async ({ input,context }) => {
     const { url } = input;
     // 如果插件已经安装 则返回错误
     const exsit = await db_manager.default_db.db.selectFrom("sys-plugin")
@@ -27,13 +24,12 @@ export const install_admin_module = os
       status: SysPluginStatus.active,
       default_pathname: "/plugins/base",
     }).execute();
-    const install_module_result = await modManager.install_module({
+    const install_module_result = await context.modManager.install_module({
       url: url,
       name: "默认管理系统",
-   
     });
     if (install_module_result.ok) {
-      await modManager.reset_default_module(url);
+      await context.modManager.reset_default_module(url);
       await db_manager.default_db.db.insertInto("sys-plugin").values({
         name: "默认管理系统",
         url: url,

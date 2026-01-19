@@ -1,4 +1,4 @@
-import { Input, Button, useDialog } from "@24wings/shadcn";
+import { Button, Input, useDialog } from "@24wings/shadcn";
 import { useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 import { orpc_client } from "../../../../orpc-client.ts";
@@ -105,13 +105,13 @@ export default function TenantManagerPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">租户管理</h1>
-        <div className="flex gap-2">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">租户管理</h1>
+        <div class="flex gap-2">
           <Input
             placeholder="搜索租户..."
             value={searchKeyword}
-            className="w-64"
+            class="w-64"
           />
           <Button onClick={handleCreate}>
             新建租户
@@ -126,14 +126,15 @@ export default function TenantManagerPage() {
         onDelete={handleDelete}
       />
 
-      <TenantForm
-        isOpen={isDialogOpen.value}
-        onClose={() => isDialogOpen.value = false}
-        onSave={handleSave}
-        initialData={currentTenant.value}
-        loading={loading.value}
-        isEditing={isEditing.value}
-      />
+     {isDialogOpen.value&&<TenantForm
+          isOpen={isDialogOpen}
+          onClose={() => isDialogOpen.value = false}
+          onSave={handleSave}
+          initialData={currentTenant.value}
+          loading={loading.value}
+          isEditing={isEditing.value}
+        />
+     }
     </>
   );
 }

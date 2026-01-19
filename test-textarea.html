@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Textarea Component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import { render } from 'https://esm.sh/preact';
+        import { signal } from 'https://esm.sh/@preact/signals';
+        import { Textarea } from './libs/shadcn/mod.tsx';
+
+        const App = () => {
+            const textValue = signal('Hello, Textarea!\nThis is a test.\nMultiple lines.');
+
+            return (
+                <div class="p-4 max-w-md mx-auto">
+                    <h1 class="text-2xl font-bold mb-4">Test Textarea Component</h1>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Default Textarea</label>
+                        <Textarea 
+                            value={textValue}
+                            rows={5}
+                            placeholder="Enter your text here..."
+                        />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Disabled Textarea</label>
+                        <Textarea 
+                            value={signal('This is disabled')}
+                            disabled
+                            rows={3}
+                        />
+                    </div>
+                    <div class="mt-4 p-4 bg-gray-100 rounded-md">
+                        <h2 class="text-sm font-medium mb-2">Current Value:</h2>
+                        <pre class="whitespace-pre-wrap">{textValue.value}</pre>
+                    </div>
+                </div>
+            );
+        };
+
+        render(<App />, document.getElementById('app'));
+    </script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>

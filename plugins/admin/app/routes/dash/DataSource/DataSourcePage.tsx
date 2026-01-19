@@ -144,13 +144,13 @@ export default function DataSourcePage() {
       />
 
       {/* 新增/编辑对话框 */}
-      <DataSourceForm
-        isOpen={showDialog.value}
+      {showDialog.value&&<DataSourceForm
+        isOpen={showDialog}
         onClose={closeDialog}
         onSave={saveDatasource}
         initialData={editingItem.value}
         loading={loading.value}
-      />
+      />}
     </div>
   );
 }

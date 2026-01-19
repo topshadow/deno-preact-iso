@@ -3,7 +3,8 @@
   "exports": {
     ".": "./mod.ts",
     "./db-manager": "./db-manager.ts",
-    "./types": "./types/mod.ts"
+    "./types": "./types/mod.ts",
+    "./dev":"./src/boot/dev.ts"
   },
   "version": "0.0.8",
   "license": "mit",
@@ -11,6 +12,7 @@
     "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
   },
   "imports": {
+    "@logtape/logtape": "jsr:@logtape/logtape@^2.0.0",
     "@orpc/openapi": "npm:@orpc/openapi@^1.13.4",
     "@orpc/server": "npm:@orpc/server@^1.13.4",
     "@orpc/zod": "npm:@orpc/zod@^1.13.4",

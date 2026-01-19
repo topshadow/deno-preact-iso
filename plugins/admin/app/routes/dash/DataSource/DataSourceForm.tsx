@@ -1,9 +1,9 @@
 import { Button, Dialog, Input, Label, Select } from "@24wings/shadcn";
-import { useSignal } from "@preact/signals";
+import { Signal, useSignal } from "@preact/signals";
 import type { Dialect, SysDbStatus, SysDatasource } from "@24wings/build/types";
 
 interface DataSourceFormProps {
-  isOpen: boolean;
+  isOpen: Signal<boolean>;
   onClose: () => void;
   onSave: (data: Partial<SysDatasource>) => Promise<void>;
   initialData?: Partial<SysDatasource>;
@@ -18,7 +18,7 @@ export function DataSourceForm({
   loading = false,
 }: DataSourceFormProps) {
   // 将boolean转换为Signal<boolean>以满足Dialog组件的要求
-  const isOpenSignal = useSignal(isOpen);
+
   // 表单数据管理
   const formUrlSignal = useSignal(initialData.url || "");
   const formDialectSignal = useSignal<keyof typeof Dialect>(initialData.dialect || "Sqlite");
@@ -48,7 +48,7 @@ export function DataSourceForm({
 
   return (
     <Dialog
-      open={isOpenSignal}
+      open={isOpen}
       class="fixed inset-0 z-50 flex items-center justify-center"
     >
       <Dialog.Content>

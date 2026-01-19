@@ -29,3 +29,4 @@ setup_openapi(app, router, {
 ssrRoutes([{ path: "/*", Component: App }], app, App);
 
 export default app;
+ 

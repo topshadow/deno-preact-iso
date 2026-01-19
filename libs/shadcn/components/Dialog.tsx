@@ -328,9 +328,11 @@ export function Dialog({
   description,
   onOpenChange,
   children,
-  class: className,
   ...props
 }: DialogProps) {
+  // 使用useEffect监听open.value的变化，确保组件重新渲染
+
+
   // 处理外部点击关闭
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -351,7 +353,7 @@ export function Dialog({
         overlayRef.current.removeEventListener("click", handleOverlayClick);
       }
     };
-  }, [open.value]);
+  }, []);
 
   // 处理ESC键关闭
   useEffect(() => {
@@ -377,11 +379,11 @@ export function Dialog({
     <DialogContext.Provider value={{ open, title, description }}>
       <div
         ref={overlayRef}
+        {...props}
         class={cn(
           "fixed inset-0 z-50 bg-black/50 flex items-center justify-center",
-          className,
+          props.class,
         )}
-        {...props}
       >
         {children}
       </div>
@@ -391,7 +393,7 @@ export function Dialog({
 
 function DialogContent({
   children,
-  class: className,
+
   ...props
 }: {
   children: ComponentChild;
@@ -418,11 +420,11 @@ function DialogContent({
   return (
     <div
       ref={contentRef}
+      {...props}
       class={cn(
         "relative bg-background rounded-lg border border-border shadow-2xl w-full max-w-sm mx-4 p-6 animate-in fade-in-50 zoom-in-95 duration-200",
-        className,
+        props.class,
       )}
-      {...props}
     >
       {children}
     </div>

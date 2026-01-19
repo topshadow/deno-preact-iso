@@ -48,7 +48,7 @@ export default function TenantTable({
       width: 100,
       render: (status: string) => (
         <span
-          className={`px-2 py-1 rounded-full text-xs font-medium ${
+          class={`px-2 py-1 rounded-full text-xs font-medium ${
             status === SysTenantStatus.active
               ? "bg-green-100 text-green-800"
               : "bg-red-100 text-red-800"
@@ -64,7 +64,7 @@ export default function TenantTable({
       width: 80,
       render: (isDefault: boolean) => (
         <span
-          className={`px-2 py-1 rounded-full text-xs font-medium ${
+          class={`px-2 py-1 rounded-full text-xs font-medium ${
             isDefault
               ? "bg-blue-100 text-blue-800"
               : "bg-gray-100 text-gray-800"
@@ -85,7 +85,7 @@ export default function TenantTable({
       title: "操作",
       width: 150,
       render: (_: any, record: SysTenant) => (
-        <div className="flex gap-2">
+        <div class="flex gap-2">
           <Button
             variant="secondary"
             size="sm"
@@ -106,27 +106,25 @@ export default function TenantTable({
   ];
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
+    <div class="overflow-hidden rounded-lg border border-border">
       <Table>
-        <Table.Header>
-          <Table.Row>
+          <Table.Header>
             {columns.map((column) => (
               <Table.Head
                 key={column.key}
-                className={column.width ? `w-${column.width}` : ""}
+                
               >
                 {column.title}
               </Table.Head>
             ))}
-          </Table.Row>
-        </Table.Header>
+          </Table.Header>
         <Table.Body>
           {loading
             ? (
               <Table.Row>
                 <Table.Cell
                   colSpan={columns.length}
-                  className="text-center py-8"
+                  class="text-center py-8"
                 >
                   加载中...
                 </Table.Cell>
@@ -137,7 +135,7 @@ export default function TenantTable({
               <Table.Row>
                 <Table.Cell
                   colSpan={columns.length}
-                  className="text-center py-8"
+                  class="text-center py-8"
                 >
                   暂无数据
                 </Table.Cell>

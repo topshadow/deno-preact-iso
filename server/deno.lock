@@ -120,6 +120,8 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@logtape/logtape@2",
+      "jsr:@logtape/pretty@2",
       "jsr:@std/assert@1",
       "jsr:@std/cli@^1.0.25",
       "jsr:@std/dotenv@~0.225.6",

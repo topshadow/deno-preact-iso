@@ -105,14 +105,14 @@ export default function PluginManagerPage() {
   return (
     <>
       {/* 页面标题和操作按钮 */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">插件管理</h1>
-        <div className="flex gap-2">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">插件管理</h1>
+        <div class="flex gap-2">
           {/* 搜索框 */}
           <Input
             placeholder="搜索插件..."
             value={searchKeyword}
-            className="w-64"
+            class="w-64"
           />
           {/* 新增按钮 */}
           <Button onClick={handleCreate}>
@@ -130,12 +130,14 @@ export default function PluginManagerPage() {
       />
 
       {/* 新增/编辑对话框 */}
-      <PluginForm
-        isOpen={isDialogOpen.value}
-        onClose={handleCloseDialog}
-        onSave={handleSave}
-        initialData={editingItem.value}
-      />
+      {isDialogOpen.value && (
+        <PluginForm
+          isOpen={isDialogOpen}
+          onClose={handleCloseDialog}
+          onSave={handleSave}
+          initialData={editingItem.value}
+        />
+      )}
     </>
   );
 }

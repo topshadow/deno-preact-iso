@@ -9,7 +9,17 @@ import {
 
 import z from "zod";
 
-// 创建租户
+/**
+ * 创建租户
+ * @description 创建新的租户配置
+ * @param {Object} input - 租户创建参数
+ * @param {string} input.name - 租户名称，不能为空
+ * @param {string} input.url - 租户URL，不能为空
+ * @param {SysTenantStatus} [input.status] - 租户状态，默认为active
+ * @param {SysTenantStrategy} [input.strategy] - 租户策略，支持Domain、SubDomain或Default，默认为Default
+ * @param {number} [input.is_default] - 是否为默认租户，默认为0（非默认）
+ * @returns {Promise<Output>} 返回创建结果，包含创建的租户ID
+ */
 export const create_tenant = os
   .$context<OContext>()
   .input(
@@ -27,7 +37,7 @@ export const create_tenant = os
       ]).default(
         SysTenantStrategy.Default,
       ),
-      is_default: z.boolean().default(false),
+      is_default: z.number().default(0),
     }),
   )
   .output(
@@ -45,7 +55,7 @@ export const create_tenant = os
       if (input.is_default) {
         await db
           .updateTable("sys-tenant")
-          .set({ is_default: false })
+          .set({ is_default: 0 })
           .execute();
       }
 
@@ -72,7 +82,14 @@ export const create_tenant = os
     }
   });
 
-// 查询所有租户
+/**
+ * 查询所有租户
+ * @description 获取租户列表，支持按状态和关键词筛选
+ * @param {Object} [input] - 查询参数
+ * @param {SysTenantStatus} [input.status] - 租户状态筛选
+ * @param {string} [input.keyword] - 关键词搜索，匹配租户名称或URL
+ * @returns {Promise<Output>} 返回租户列表
+ */
 export const list_tenant = os
   .$context<OContext>()
   .input(
@@ -109,7 +126,13 @@ export const list_tenant = os
     }
   });
 
-// 查询单个租户
+/**
+ * 查询单个租户
+ * @description 根据ID获取租户详情
+ * @param {Object} input - 查询参数
+ * @param {number} input.id - 租户ID
+ * @returns {Promise<Output>} 返回租户详情
+ */
 export const get_tenant = os
   .$context<OContext>()
   .input(z.object({ id: z.number() }))
@@ -136,7 +159,18 @@ export const get_tenant = os
     }
   });
 
-// 更新租户
+/**
+ * 更新租户
+ * @description 根据ID更新租户配置
+ * @param {Object} input - 更新参数
+ * @param {number} input.id - 租户ID
+ * @param {string} [input.name] - 租户名称
+ * @param {string} [input.url] - 租户URL
+ * @param {SysTenantStatus} [input.status] - 租户状态
+ * @param {SysTenantStrategy} [input.strategy] - 租户策略，支持Domain、SubDomain或Default
+ * @param {boolean} [input.is_default] - 是否为默认租户
+ * @returns {Promise<Output>} 返回更新结果
+ */
 export const update_tenant = os
   .$context<OContext>()
   .input(
@@ -174,7 +208,7 @@ export const update_tenant = os
       if (input.is_default) {
         await db
           .updateTable("sys-tenant")
-          .set({ is_default: false })
+          .set({ is_default: 0 })
           .execute();
       }
 
@@ -201,7 +235,13 @@ export const update_tenant = os
     }
   });
 
-// 删除租户
+/**
+ * 删除租户
+ * @description 根据ID删除租户，不允许删除默认租户
+ * @param {Object} input - 删除参数
+ * @param {number} input.id - 租户ID
+ * @returns {Promise<Output>} 返回删除结果
+ */
 export const delete_tenant = os
   .$context<OContext>()
   .input(z.object({ id: z.number() }))

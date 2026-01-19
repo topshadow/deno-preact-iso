@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@logtape/logtape": "^1.3.6",
+    "@optique/logtape": "^0.9.1"
+  }
+}

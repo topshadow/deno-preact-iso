@@ -11,7 +11,8 @@ export * from "./components/Table.tsx";
 export * from "./components/Label.tsx";
 export * from "./components/Dialog.tsx";
 export * from "./components/Select.tsx";
-
+export * from "./components/Card.tsx";
+export * from "./components/Textarea.tsx";
 const platform: { is_browser: Readonly<boolean> } = {
   get is_browser() {
     return typeof window == "object";

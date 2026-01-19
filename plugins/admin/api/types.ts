@@ -1,5 +1,5 @@
 import * as z from "zod";
-import type { DbManager } from "@24wings/build/db-manager";
+import type { DbManager } from "../../../libs/build/src/db/db-manager.ts";
 
 export const Output = z.object({
   ok: z.boolean(),

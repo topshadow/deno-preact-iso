@@ -14,6 +14,8 @@
         "publish": "deno publish --no-check --allow-slow-types --allow-dirty"
     },
     "imports": {
+        "@logtape/logtape": "jsr:@logtape/logtape@^2.0.0",
+        "@logtape/pretty": "jsr:@logtape/pretty@^2.0.0",
         "@orpc/client": "npm:@orpc/client@^1.13.4",
         "@orpc/openapi": "npm:@orpc/openapi@^1.13.4",
         "@orpc/server": "npm:@orpc/server@^1.13.4",
