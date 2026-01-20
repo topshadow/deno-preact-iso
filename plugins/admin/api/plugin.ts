@@ -22,6 +22,7 @@ import z from "zod";
  */
 export const create_plugin = os
   .$context<OContext>()
+  .route({ description: "创建新的插件配置" })
   .input(
     z.object({
       name: z.string().min(1, "插件名称不能为空"),
@@ -82,6 +83,7 @@ export const create_plugin = os
  */
 export const list_plugin = os
   .$context<OContext>()
+  .route({ description: "获取插件列表，支持按状态、域名和关键词筛选" })
   .input(
     z.object({
       status: z.enum([SysPluginStatus.active, SysPluginStatus.disabled])
@@ -129,6 +131,7 @@ export const list_plugin = os
  */
 export const get_plugin = os
   .$context<OContext>()
+  .route({ description: "根据ID获取插件详情" })
   .input(z.object({ id: z.number() }))
   .output(
     Output.extend({ data: z.any().optional() }),
@@ -168,6 +171,7 @@ export const get_plugin = os
  */
 export const update_plugin = os
   .$context<OContext>()
+  .route({ description: "根据ID更新插件配置" })
   .input(
     z.object({
       id: z.number(),
@@ -229,6 +233,7 @@ export const update_plugin = os
  */
 export const delete_plugin = os
   .$context<OContext>()
+  .route({description:'根据ID删除插件'})
   .input(z.object({ id: z.number() }))
   .output(Output)
   .handler(async ({ input, context }) => {

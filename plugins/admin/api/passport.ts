@@ -54,6 +54,7 @@ const VerifyTokenOutput = Output.extend({
  */
 export const login = os
   .$context<OContext>()
+  .route({ description: "验证用户账号密码并生成JWT令牌" })
   .input(LoginSchema)
   .output(LoginOutput)
   .handler(async ({ input, context }) => {
@@ -107,6 +108,7 @@ export const login = os
  * @returns {Promise<Output>} 返回验证结果，包含令牌是否有效以及用户信息
  */
 export const verify_token = os
+  .route({ description: "验证JWT令牌的有效性" })
   .input(z.object({ token: z.string() }))
   .output(VerifyTokenOutput)
   .handler(async ({ input }) => {
@@ -144,6 +146,7 @@ export const verify_token = os
  * @returns {Promise<Output>} 返回登出结果
  */
 export const logout = os
+  .route({description:'处理用户登出请求（JWT是无状态的，实际只需客户端删除令牌）'})
   .output(Output)
   .handler(async () => {
     // JWT是无状态的，登出只需客户端删除token

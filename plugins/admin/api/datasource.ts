@@ -194,6 +194,7 @@ export const update_datasource = os
  */
 export const delete_datasource = os
   .$context<OContext>()
+  .route({ description: "根据ID删除数据源" })
   .input(z.object({ id: z.number() }))
   .output(Output)
   .handler(async ({ input, context }) => {
@@ -230,6 +231,7 @@ export const delete_datasource = os
  */
 export const health = os
   .$context<OContext>()
+  .route({ description: "检查数据库连接状态，返回数据源列表" })
   .output(Output)
   .handler(async ({ input, context }) => {
     console.log("env db_manager", context.db_manager);

@@ -11,6 +11,7 @@ import { menus } from "../app/data/menus.tsx";
  */
 export const loadMenus = os
   .$context<OContext>()
+  .route({ description: "获取系统菜单列表，包括基础菜单和插件菜单" })
   .output(Output.extend({ data: z.array(MenuItem) }))
   .handler(async ({ context }) => {
     const data = menus.map((m) => structuredClone(m));
@@ -24,8 +25,8 @@ export const loadMenus = os
         title: p.name || p.url,
         icon: "",
         path: p.pathname || p.default_pathname,
-        external:true
+        external: true,
       })),
     });
-    return {ok:true,data};
+    return { ok: true, data };
   });

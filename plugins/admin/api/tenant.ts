@@ -22,6 +22,7 @@ import z from "zod";
  */
 export const create_tenant = os
   .$context<OContext>()
+  .route({ description: "创建新的租户配置" })
   .input(
     z.object({
       name: z.string().min(1, "租户名称不能为空"),
@@ -92,6 +93,7 @@ export const create_tenant = os
  */
 export const list_tenant = os
   .$context<OContext>()
+  .route({ description: "获取租户列表，支持按状态和关键词筛选" })
   .input(
     z.object({
       status: z.enum([SysTenantStatus.active, SysTenantStatus.disabled])
@@ -135,6 +137,7 @@ export const list_tenant = os
  */
 export const get_tenant = os
   .$context<OContext>()
+  .route({ description: "根据ID获取租户详情" })
   .input(z.object({ id: z.number() }))
   .output(
     Output.extend({ data: z.any().optional() }),
@@ -173,6 +176,7 @@ export const get_tenant = os
  */
 export const update_tenant = os
   .$context<OContext>()
+  .route({ description: "根据ID更新租户配置" })
   .input(
     z.object({
       id: z.number(),
@@ -244,6 +248,7 @@ export const update_tenant = os
  */
 export const delete_tenant = os
   .$context<OContext>()
+  .route({description:'根据ID删除租户，不允许删除默认租户'})
   .input(z.object({ id: z.number() }))
   .output(Output)
   .handler(async ({ input, context }) => {
